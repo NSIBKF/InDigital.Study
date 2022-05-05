@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "866584316849",
+    "project_id": "indigitalstudy",
+    "storage_bucket": "indigitalstudy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866584316849:android:5a66ac6723c6d829c8cb90",
+        "android_client_info": {
+          "package_name": "com.example.indigitalstudy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866584316849-192jolis3bt207l2s44vnqgeffiin0ia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASMyPFvsDmLzDHniQNc-L31GJJ77f1WJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866584316849-192jolis3bt207l2s44vnqgeffiin0ia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

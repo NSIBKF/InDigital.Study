@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ProfileFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/Out_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="70dp"
+        android:background="@drawable/login_btn_bg"
+        android:text="Log Out"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+</FrameLayout>
