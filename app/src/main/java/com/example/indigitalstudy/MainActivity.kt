@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.indigitalstudy.databinding.ActivityMainBinding
+import com.example.indigitalstudy.databinding.FragmentProfileBinding
 import com.example.indigitalstudy.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseError
@@ -15,15 +17,21 @@ import com.google.firebase.auth.FirebaseAuthException
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
+    lateinit var bindingClass :ActivityMainBinding
     private val searchFragment = SearchFragment()
     private val homeFragment = MainFragment()
     private val settingsFragment = SettingsFragment()
     private val personFragment = ProfileFragment()
     private val scheduleFragment = ScheduleFragment()
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        bindingClass = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bindingClass.root)
+
 
         mAuth = FirebaseAuth.getInstance()
 
