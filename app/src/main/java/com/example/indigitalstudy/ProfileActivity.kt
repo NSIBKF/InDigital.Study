@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.indigitalstudy.databinding.ActivityMainBinding
 import com.example.indigitalstudy.databinding.FragmentProfileBinding
+import com.example.indigitalstudy.fragments.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileActivity: AppCompatActivity() {
@@ -16,13 +18,10 @@ class ProfileActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindingClassProf = FragmentProfileBinding.inflate(layoutInflater)
         setContentView(bindingClassProf.root)
-
         mAuth = FirebaseAuth.getInstance()
-
-        bindingClassProf.OutBtn.setOnClickListener {
-            bindingClassProf.textView.text = "Changed"
-                    mAuth.signOut()
-        }
+      //  supportFragmentManager.beginTransaction()
+       //     .replace(R.id.place_holderProfile, ProfileFragment.newInstance())
+       //     .commit()
 
 
 
@@ -39,7 +38,7 @@ class ProfileActivity: AppCompatActivity() {
         if(mAuth.currentUser == null)
         {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
-
 }
