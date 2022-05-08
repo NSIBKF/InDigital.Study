@@ -3,6 +3,7 @@ package com.example.indigitalstudy
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.indigitalstudy.databinding.ActivityMainBinding
@@ -13,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 class ProfileActivity: AppCompatActivity() {
     lateinit var bindingClassProf : FragmentProfileBinding
     private lateinit var mAuth: FirebaseAuth
+    private val dataModel: ViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +25,15 @@ class ProfileActivity: AppCompatActivity() {
       //  supportFragmentManager.beginTransaction()
        //     .replace(R.id.place_holderProfile, ProfileFragment.newInstance())
        //     .commit()
+
+
+        dataModel.boolParametr.observe(this, {
+            dataModel.boolParametr.value = false
+        })
+        if (dataModel.boolParametr.value == true) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
 
 
 
@@ -40,5 +52,6 @@ class ProfileActivity: AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+
     }
 }

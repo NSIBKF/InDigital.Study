@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuthException
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     lateinit var bindingClass :ActivityMainBinding
+
     private val searchFragment = SearchFragment()
     private val homeFragment = MainFragment()
     private val settingsFragment = SettingsFragment()
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindingClass = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingClass.root)
+
 
 
         mAuth = FirebaseAuth.getInstance()
