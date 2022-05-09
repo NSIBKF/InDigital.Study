@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 class ProfileActivity: AppCompatActivity() {
     lateinit var bindingClassProf : FragmentProfileBinding
     private lateinit var mAuth: FirebaseAuth
-    private val dataModel: ViewModel by viewModels()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +26,6 @@ class ProfileActivity: AppCompatActivity() {
        //     .replace(R.id.place_holderProfile, ProfileFragment.newInstance())
        //     .commit()
 
-
-        dataModel.boolParametr.observe(this, {
-            dataModel.boolParametr.value = false
-        })
-        if (dataModel.boolParametr.value == true) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
 
 
 
@@ -54,4 +46,6 @@ class ProfileActivity: AppCompatActivity() {
         }
 
     }
+
+
 }

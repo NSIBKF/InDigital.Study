@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import com.example.indigitalstudy.LoginActivity
 import com.example.indigitalstudy.MainActivity
 import com.example.indigitalstudy.ProfileActivity
-import com.example.indigitalstudy.ViewModel
 import com.example.indigitalstudy.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -20,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 class ProfileFragment : Fragment() {
     lateinit var bindingClassProf : FragmentProfileBinding
     private lateinit var mAuth: FirebaseAuth
-    private val dataModel: ViewModel by activityViewModels()
+
 
 
 
@@ -36,11 +35,9 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
 
         bindingClassProf.OutBtn.setOnClickListener {
-            bindingClassProf.textView.text = "Changed"
             mAuth.signOut()
-            dataModel.boolParametr.value = true
-
-        }
+            activity?.finish()
+       }
 
 
     }
