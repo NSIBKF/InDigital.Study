@@ -21,7 +21,7 @@ class ProfileActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindingClassProf = FragmentProfileBinding.inflate(layoutInflater)
         setContentView(bindingClassProf.root)
-        mAuth = FirebaseAuth.getInstance()
+        //mAuth = FirebaseAuth.getInstance()
       //  supportFragmentManager.beginTransaction()
        //     .replace(R.id.place_holderProfile, ProfileFragment.newInstance())
        //     .commit()
@@ -29,22 +29,40 @@ class ProfileActivity: AppCompatActivity() {
 
 
 
-        mAuth.addAuthStateListener {
-           if (it.currentUser == null){
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }
-        }
+        //mAuth.addAuthStateListener {
+        //   if (it.currentUser == null){
+        //        //startActivity(Intent(this, LoginActivity::class.java))
+        //        finish()
+        //    }
+        //}
     }
 
     override fun onStart() {
         super.onStart()
-        if(mAuth.currentUser == null)
-        {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
+        //if(mAuth.currentUser == null)
+        //{
+        //    //startActivity(Intent(this, LoginActivity::class.java))
+        //    finish()
+        //}
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mAuth = FirebaseAuth.getInstance()
+        //  supportFragmentManager.beginTransaction()
+        //     .replace(R.id.place_holderProfile, ProfileFragment.newInstance())
+        //     .commit()
+
+
+
+
+        mAuth.addAuthStateListener {
+            if (it.currentUser == null){
+                //startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+        }
     }
 
 
