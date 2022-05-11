@@ -36,6 +36,7 @@ class ProfileFragment : Fragment() {
 
         bindingClassProf.OutBtn.setOnClickListener {
             mAuth.signOut()
+            activity?.setResult(101, null)
             activity?.finish()
        }
 

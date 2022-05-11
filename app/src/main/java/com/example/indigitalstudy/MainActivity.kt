@@ -77,14 +77,16 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (mAuth.currentUser == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
+            //startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }
     override fun onDestroy() {
         super.onDestroy()
 
-        startActivity(Intent(this, LoginActivity::class.java))
+        //intent.getBooleanExtra("key", true)
+        //startActivity(Intent(this, LoginActivity::class.java))
+        setResult(100, null)
         finish()
 
     }
