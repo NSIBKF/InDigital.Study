@@ -6,7 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-<ImageView
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
     android:id="@+id/audi_image"
     android:layout_width="match_parent"
     android:layout_height="200dp"
@@ -29,7 +40,7 @@
         android:hint="Email"
         android:textColor="@color/blue"
         android:padding="10dp"
-        android:background="@drawable/login_input_bg"/>
+        android:background="@drawable/edit_text_border"/>
 
     <EditText
         android:id="@+id/password_input"
@@ -44,7 +55,7 @@
         android:textColorHint="#5C5656"
         android:hint="Password"
         android:padding="10dp"
-        android:background="@drawable/login_input_bg"/>
+        android:background="@drawable/edit_text_border"/>
     <Button
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
@@ -65,6 +76,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="Don't have an account? Sign Up."
         android:gravity="center"
+        android:textColor="@drawable/login_btn_bg"
         android:background="@drawable/top_border_grey"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

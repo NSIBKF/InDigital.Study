@@ -2,6 +2,8 @@ package com.example.indigitalstudy
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -10,15 +12,38 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import android.widget.VideoView
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var videoBG: VideoView
+    private var mMediaPlayer: MediaPlayer? = null
+    private var mCurrentVideoPosition:Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         Log.d("tag", "onCreateLA")
+        videoBG = findViewById<VideoView>(R.id.videoView)
+        val uri = Uri.parse("android.resource://"
+                + getPackageName()
+                + "/"
+                + R.raw.background_login_activity)
+        videoBG.setVideoURI(uri)
+        videoBG.start()
+
+        videoBG.setOnPreparedListener {
+            mMediaPlayer = it
+            mMediaPlayer!!.setLooping(true)
+
+            if (mCurrentVideoPosition != 0) {
+                mMediaPlayer!!.seekTo(mCurrentVideoPosition)
+                mMediaPlayer!!.start()
+            }
+
+        }
 
         val login_btn = findViewById<Button>(R.id.login_btn)
         login_btn.setOnClickListener(this)
@@ -26,9 +51,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         mAuth = FirebaseAuth.getInstance()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -59,8 +82,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 else {
                     // всплывающие мини иконки об ошибках
-                    findViewById<EditText>(R.id.email_input).setError("Mistake")
-                    findViewById<EditText>(R.id.password_input).setError("Mistake2")
+                    //findViewById<EditText>(R.id.email_input).setError("Mistake")
+                    //findViewById<EditText>(R.id.password_input).setError("Mistake2")
                     //findViewById<EditText>(R.id.email_input).requestFocus()
                     //findViewById<EditText>(R.id.password_input).requestFocus()
 
@@ -80,5 +103,20 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun validate(email: String, password:String) =
         email.isNotEmpty() && password.isNotEmpty()
 
+    override fun onPause() {
+        super.onPause()
+        mCurrentVideoPosition = mMediaPlayer!!.currentPosition
+        videoBG.pause()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        videoBG.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mMediaPlayer!!.release()
+        mMediaPlayer = null
+    }
 }
