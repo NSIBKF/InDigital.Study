@@ -24,6 +24,14 @@
         <entry key="..\:/New folder/app/src/main/res/layout/fragment_profile.xml" value="0.31145833333333334" />
         <entry key="..\:/New folder/app/src/main/res/layout/fragment_settings.xml" value="0.31145833333333334" />
         <entry key="..\:/New folder/app/src/main/res/menu/menu.xml" value="0.3140625" />
+        <entry key="..\:/inDigital/app/src/main/res/drawable/edit_text_border.xml" value="0.317" />
+        <entry key="..\:/inDigital/app/src/main/res/drawable/ic_baseline_home.xml" value="0.317" />
+        <entry key="..\:/inDigital/app/src/main/res/drawable/ic_baseline_person.xml" value="0.317" />
+        <entry key="..\:/inDigital/app/src/main/res/drawable/login_btn_bg.xml" value="0.317" />
+        <entry key="..\:/inDigital/app/src/main/res/drawable/login_input_bg.xml" value="0.4185" />
+        <entry key="..\:/inDigital/app/src/main/res/drawable/top_border_grey.xml" value="0.317" />
+        <entry key="..\:/inDigital/app/src/main/res/layout/activity_login.xml" value="0.3333333333333333" />
+        <entry key="..\:/inDigital/app/src/main/res/layout/background_login_activity.xml" value="0.5546875" />
       </map>
     </option>
   </component>
