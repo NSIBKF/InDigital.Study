@@ -1,31 +1,41 @@
 package com.example.indigitalstudy
 
+import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
+import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import android.widget.VideoView
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var videoBG: VideoView
+    lateinit var sharedPreferences: SharedPreferences
     private var mMediaPlayer: MediaPlayer? = null
-    private var mCurrentVideoPosition:Int = 0
+    private var mCurrentVideoPosition: Int = 0
+    private val PREFS_NAME: String = "PrefsFile"
+    private var isRemembered = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        isRemembered = sharedPreferences.getBoolean("CHECK_BOX", false)
+
+        if (isRemembered) {
+            val i = Intent(this, MainActivity::class.java)
+            startActivityForResult(i, 100)
+            finish()
+        }
         Log.d("tag", "onCreateLA")
+        /* loading background video  */
         videoBG = findViewById<VideoView>(R.id.videoView)
         val uri = Uri.parse("android.resource://"
                 + getPackageName()
@@ -45,8 +55,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         }
 
-        val login_btn = findViewById<Button>(R.id.login_btn)
-        login_btn.setOnClickListener(this)
+        val loginBtn = findViewById<Button>(R.id.login_btn)
+        loginBtn.setOnClickListener(this)
 
         mAuth = FirebaseAuth.getInstance()
     }
@@ -71,14 +81,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(view: View) {
+        val remember = findViewById<CheckBox>(R.id.remember_me)
+        val checked: Boolean = remember.isChecked
         val email = findViewById<EditText>(R.id.email_input).text.toString()
         val password = findViewById<EditText>(R.id.password_input).text.toString()
         if(validate(email, password)) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if(it.isSuccessful) {
+                    val edit: SharedPreferences.Editor = sharedPreferences.edit()
+                    edit.putBoolean("CHECK_BOX", checked)
+                    edit.apply()
                     val i = Intent(this, MainActivity::class.java)
-                    //startActivity(Intent(this, MainActivity::class.java))
                     startActivityForResult(i, 100)
+                    finish()
                 }
                 else {
                     // всплывающие мини иконки об ошибках
@@ -89,7 +104,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                     Toast.makeText(this, "Incorrect email or password. Try again", Toast.LENGTH_SHORT)
                         .show()
-                    findViewById<EditText>(R.id.email_input).text = null
+                    //findViewById<EditText>(R.id.email_input).text = null
                     findViewById<EditText>(R.id.password_input).text = null
                 }
             }
@@ -116,7 +131,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        mMediaPlayer!!.release()
-        mMediaPlayer = null
+        if (!isRemembered) {
+            mMediaPlayer!!.release()
+            mMediaPlayer = null
+        }
     }
 }

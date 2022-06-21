@@ -12,6 +12,8 @@ import com.example.indigitalstudy.R
  */
 class SettingsFragment : Fragment() {
 
+    private val PREFS_NAME: String = "PrefsFile"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
