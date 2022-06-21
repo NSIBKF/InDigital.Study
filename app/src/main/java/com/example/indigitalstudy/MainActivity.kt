@@ -1,6 +1,8 @@
 package com.example.indigitalstudy
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -34,19 +36,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(bindingClass.root)
 
 
-
         mAuth = FirebaseAuth.getInstance()
-
-         //  mAuth.signOut()//////////////////////////////////////////////////////////////надо поместить в кнопку!!!!!
-
-        //   auth.signInWithEmailAndPassword("fomin.kirill02@mail.ru", "ghjnjnbg02")
-        //      .addOnCompleteListener {
-        //          if(it.isSuccessful) {
-//
-        //         }else{
-
-        //        }
-        //    }
 
 
         replaceFragment(homeFragment)
@@ -74,12 +64,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     override fun onStart() {
         super.onStart()
         if (mAuth.currentUser == null) {
-            //startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
     override fun onDestroy() {
         super.onDestroy()

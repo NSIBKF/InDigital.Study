@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@id/password_input"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="55dp"
         android:text="Log In"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -79,6 +79,15 @@
         android:textColor="@drawable/login_btn_bg"
         android:background="@drawable/top_border_grey"/>
 
+    <CheckBox
+        android:id="@+id/remember_me"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:text="Remember me"
+        app:layout_constraintBottom_toTopOf="@+id/login_btn"
+        app:layout_constraintEnd_toEndOf="@+id/password_input"
+        app:layout_constraintStart_toStartOf="@+id/password_input"
+        app:layout_constraintTop_toBottomOf="@+id/password_input" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

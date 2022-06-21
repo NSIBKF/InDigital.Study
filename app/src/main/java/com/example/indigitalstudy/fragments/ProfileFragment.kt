@@ -1,15 +1,12 @@
 package com.example.indigitalstudy.fragments
 
-import android.content.Intent
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import com.example.indigitalstudy.LoginActivity
-import com.example.indigitalstudy.MainActivity
-import com.example.indigitalstudy.ProfileActivity
 import com.example.indigitalstudy.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -18,8 +15,9 @@ import com.google.firebase.auth.FirebaseAuth
  */
 class ProfileFragment : Fragment() {
     lateinit var bindingClassProf : FragmentProfileBinding
+    lateinit var sharedPreferences: SharedPreferences
     private lateinit var mAuth: FirebaseAuth
-
+    private val PREFS_NAME: String = "PrefsFile"
 
 
 
@@ -27,14 +25,21 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         mAuth = FirebaseAuth.getInstance()
         bindingClassProf = FragmentProfileBinding.inflate(layoutInflater)
+
         return bindingClassProf.root
+
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
-
+        sharedPreferences = activity!!.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         bindingClassProf.OutBtn.setOnClickListener {
+            val edit: SharedPreferences.Editor = sharedPreferences.edit()
+            edit.clear()
+            edit.apply()
+
             mAuth.signOut()
             activity?.setResult(101, null)
             activity?.finish()
