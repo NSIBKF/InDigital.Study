@@ -5,9 +5,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.indigitalstudy.databinding.ActivityMainBinding
 import com.example.indigitalstudy.databinding.FragmentProfileBinding
@@ -20,12 +23,16 @@ import com.google.firebase.auth.FirebaseAuthException
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     lateinit var bindingClass :ActivityMainBinding
+    lateinit var sharedPreferences: SharedPreferences
+
 
     private val searchFragment = SearchFragment()
     private val homeFragment = MainFragment()
     private val settingsFragment = SettingsFragment()
     private val personFragment = ProfileFragment()
     private val scheduleFragment = ScheduleFragment()
+    private val PREFS_NAME: String = "PrefsFile"
+    private var isBackPressed: Boolean = false
 
 
 
@@ -34,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindingClass = ActivityMainBinding.inflate(layoutInflater)
         setContentView(bindingClass.root)
+        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
 
         mAuth = FirebaseAuth.getInstance()
@@ -73,16 +81,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
     override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
+        AlertDialog.Builder(this).apply {
+            setTitle("Подтверждение")
+            setMessage("Вы уверены, что хотите выйти из программы?")
+
+            setPositiveButton("Да") { _, _ ->
+                isBackPressed = true
+                super.onBackPressed()
+
+            }
+
+            setNegativeButton("Нет"){_, _ ->
+                // if user press no, then return the activity
+                //Toast.makeText(this@MainActivity, "Thank you",
+                //    Toast.LENGTH_LONG).show()
+            }
+            setCancelable(true)
+        }.create().show()
     }
     override fun onDestroy() {
         super.onDestroy()
-
         //intent.getBooleanExtra("key", true)
         //startActivity(Intent(this, LoginActivity::class.java))
         setResult(100, null)
-        finish()
+        if (!isBackPressed) {
+            val edit: SharedPreferences.Editor = sharedPreferences.edit()
+            edit.clear()
+            Log.d("tag", "файл изменился в MainActivity")
+            edit.apply()
+            val i = Intent(this, LoginActivity::class.java)
+            startActivity(i)
+        }
 
     }
 
