@@ -135,5 +135,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             mMediaPlayer!!.release()
             mMediaPlayer = null
         }
+        //setResult(100, null)
     }
 }
