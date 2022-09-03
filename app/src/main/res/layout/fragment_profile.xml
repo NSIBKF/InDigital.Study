@@ -7,61 +7,49 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
-    <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
-    </ScrollView>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/layout_bg"
-        android:orientation="vertical"
+        android:layout_gravity="top"
         >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp"
+            android:src="@drawable/avatar_default"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp" />
 
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/surname_name"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
     </LinearLayout>
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="false"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"
-        android:src="@drawable/avatar_default"
-        app:civ_border_color="@color/black"
-        app:civ_border_width="2dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="135dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="50dp"
-        android:gravity="center"
-        android:layout_toEndOf="@+id/profile_image"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:text="Surname Name" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="30dp"
+        android:layout_margin="30dp"
+        android:layout_gravity="center"
         android:background="@drawable/layout_bg1"
-        android:orientation="vertical"
         >
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/graph"
+            android:layout_margin="10dp" />
     </LinearLayout>
 
     <Button
@@ -71,7 +59,7 @@
         android:layout_gravity="bottom"
         android:layout_margin="70dp"
         android:background="@drawable/login_btn_bg"
-        android:text="Log Out"
+        android:text="@string/log_out"
         android:textAllCaps="false"
         android:textColor="@color/white" />
 
