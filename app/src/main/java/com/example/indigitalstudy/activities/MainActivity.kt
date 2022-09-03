@@ -1,4 +1,4 @@
-package com.example.indigitalstudy
+package com.example.indigitalstudy.activities
 
 import android.content.Context
 import android.content.Intent
@@ -6,19 +6,13 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.example.indigitalstudy.R
 import com.example.indigitalstudy.databinding.ActivityMainBinding
-import com.example.indigitalstudy.databinding.FragmentProfileBinding
 import com.example.indigitalstudy.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.FirebaseError
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthException
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
@@ -28,9 +22,9 @@ class MainActivity : AppCompatActivity() {
 
     private val searchFragment = SearchFragment()
     private val homeFragment = MainFragment()
-    private val settingsFragment = SettingsFragment()
     private val personFragment = ProfileFragment()
     private val scheduleFragment = ScheduleFragment()
+    private val messagesFragment = MessagesFragment()
     private val PREFS_NAME: String = "PrefsFile"
     private var isBackPressed: Boolean = false
 
@@ -56,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.ic_main -> replaceFragment(homeFragment)
                 R.id.ic_person -> replaceFragment(personFragment)
                 R.id.ic_schedule -> replaceFragment(scheduleFragment)
-                R.id.ic_settings -> replaceFragment(settingsFragment)
+                R.id.ic_messages -> replaceFragment(messagesFragment)
                 R.id.ic_search -> replaceFragment(searchFragment)
             }
             true
