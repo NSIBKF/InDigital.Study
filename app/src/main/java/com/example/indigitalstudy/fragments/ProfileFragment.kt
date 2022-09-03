@@ -40,7 +40,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
 
         bindingClassProf.OutBtn.setOnClickListener {
-            sharedPreferences = activity!!.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             val edit: SharedPreferences.Editor = sharedPreferences.edit()
             edit.clear()
             edit.apply()
