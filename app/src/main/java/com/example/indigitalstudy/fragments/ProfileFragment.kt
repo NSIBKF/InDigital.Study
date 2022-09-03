@@ -8,10 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<< HEAD
 import androidx.fragment.app.Fragment
-=======
->>>>>>> developK
 import com.example.indigitalstudy.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.jjoe64.graphview.GraphView
