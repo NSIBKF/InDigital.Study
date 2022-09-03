@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">InDigital.Study</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="messages">Messages</string>
+    <string name="search">Search</string>
+    <string name="schedule">Schedule</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up.</string>
+    <string name="remember_me">Remember me</string>
+    <string name="name">Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
 </resources>

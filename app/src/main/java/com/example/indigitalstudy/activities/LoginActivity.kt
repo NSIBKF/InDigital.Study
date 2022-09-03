@@ -1,5 +1,6 @@
-package com.example.indigitalstudy
+package com.example.indigitalstudy.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.indigitalstudy.R
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -29,6 +31,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         isRemembered = sharedPreferences.getBoolean("CHECK_BOX", false)
 
+        val SignUpText = findViewById<TextView>(R.id.sign_up_text)
+        SignUpText.setOnClickListener{
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }
+
         if (isRemembered) {
             val i = Intent(this, MainActivity::class.java)
             startActivityForResult(i, 100)
@@ -40,7 +47,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val uri = Uri.parse("android.resource://"
                 + getPackageName()
                 + "/"
-                + R.raw.background_login_activity)
+                + R.raw.background_login_activity
+        )
         videoBG.setVideoURI(uri)
         videoBG.start()
 
@@ -57,9 +65,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         val loginBtn = findViewById<Button>(R.id.login_btn)
         loginBtn.setOnClickListener(this)
+        
+
 
         mAuth = FirebaseAuth.getInstance()
     }
+
+
 
 
 
@@ -80,6 +92,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    @SuppressLint("CutPasteId")
     override fun onClick(view: View) {
         val remember = findViewById<CheckBox>(R.id.remember_me)
         val checked: Boolean = remember.isChecked
@@ -96,15 +109,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     finish()
                 }
                 else {
-                    // всплывающие мини иконки об ошибках
-                    //findViewById<EditText>(R.id.email_input).setError("Mistake")
-                    //findViewById<EditText>(R.id.password_input).setError("Mistake2")
-                    //findViewById<EditText>(R.id.email_input).requestFocus()
-                    //findViewById<EditText>(R.id.password_input).requestFocus()
-
                     Toast.makeText(this, "Incorrect email or password. Try again", Toast.LENGTH_SHORT)
                         .show()
-                    //findViewById<EditText>(R.id.email_input).text = null
+
                     findViewById<EditText>(R.id.password_input).text = null
                 }
             }

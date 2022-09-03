@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <VideoView
         android:id="@+id/videoView"
@@ -37,7 +37,7 @@
         android:layout_marginTop="50dp"
         android:inputType="textEmailAddress"
         android:textColorHint="#5C5656"
-        android:hint="Email"
+        android:hint="@string/email"
         android:textColor="@color/blue"
         android:padding="10dp"
         android:background="@drawable/edit_text_border"/>
@@ -53,7 +53,7 @@
         android:inputType="textPassword"
         android:textColor="@color/blue"
         android:textColorHint="#5C5656"
-        android:hint="Password"
+        android:hint="@string/password"
         android:padding="10dp"
         android:background="@drawable/edit_text_border"/>
     <Button
@@ -64,7 +64,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="55dp"
-        android:text="Log In"
+        android:text="@string/log_in"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:background="@drawable/login_btn_bg"/>
@@ -74,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Don't have an account? Sign Up."
+        android:text="@string/don_t_have_an_account_sign_up"
         android:gravity="center"
         android:textColor="@drawable/login_btn_bg"
         android:background="@drawable/top_border_grey"/>
@@ -85,7 +85,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Remember me"
+        android:text="@string/remember_me"
+        android:textColor="@color/blue"
         app:layout_constraintBottom_toTopOf="@+id/login_btn"
         app:layout_constraintEnd_toEndOf="@+id/password_input"
         app:layout_constraintStart_toStartOf="@+id/password_input"

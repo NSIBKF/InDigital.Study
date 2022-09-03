@@ -10,7 +10,7 @@ import com.example.indigitalstudy.R
 /**
  * A simple [Fragment] subclass.
  */
-class SettingsFragment : Fragment() {
+class MessagesFragment : Fragment() {
 
     private val PREFS_NAME: String = "PrefsFile"
 
@@ -19,7 +19,7 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        return inflater.inflate(R.layout.fragment_messages, container, false)
     }
 
 }
