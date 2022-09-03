@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         /* loading background video  */
         videoBG = findViewById<VideoView>(R.id.videoView)
         val uri = Uri.parse("android.resource://"
-                + getPackageName()
+                + packageName
                 + "/"
                 + R.raw.background_login_activity
         )
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         videoBG.setOnPreparedListener {
             mMediaPlayer = it
-            mMediaPlayer!!.setLooping(true)
+            mMediaPlayer!!.isLooping = true
 
             if (mCurrentVideoPosition != 0) {
                 mMediaPlayer!!.seekTo(mCurrentVideoPosition)

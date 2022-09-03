@@ -16,4 +16,6 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+    <string name="surname_name">Surname Name</string>
+    <string name="log_out">Log Out</string>
 </resources>
