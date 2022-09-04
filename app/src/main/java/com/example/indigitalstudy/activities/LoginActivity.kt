@@ -11,12 +11,18 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.example.indigitalstudy.R
+import com.example.indigitalstudy.utilities.Constants
+import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var videoBG: VideoView
+    private lateinit var preferencesManager: PreferenceManager
     lateinit var sharedPreferences: SharedPreferences
     private var mMediaPlayer: MediaPlayer? = null
     private var mCurrentVideoPosition: Int = 0
@@ -28,6 +34,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        preferencesManager = PreferenceManager(applicationContext)
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         isRemembered = sharedPreferences.getBoolean("CHECK_BOX", false)
 
@@ -98,7 +105,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val checked: Boolean = remember.isChecked
         val email = findViewById<EditText>(R.id.email_input).text.toString()
         val password = findViewById<EditText>(R.id.password_input).text.toString()
-        if(validate(email, password)) {
+
+
+
+         if(validate(email, password)) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if(it.isSuccessful) {
                     val edit: SharedPreferences.Editor = sharedPreferences.edit()
@@ -107,6 +117,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     val i = Intent(this, MainActivity::class.java)
                     startActivityForResult(i, 100)
                     finish()
+                } else if (validate(email, password)) {
+                    val database : FirebaseFirestore = FirebaseFirestore.getInstance()
+                    database.collection(Constants.KEY_COLLECTIONS_USERS)
+                        .whereEqualTo(Constants.KEY_EMAIL, email)
+                        .whereEqualTo(Constants.KEY_PASSWORD, password)
+                        .get()
+                        .addOnCompleteListener {
+                            if(it.isSuccessful && it.result != null && it.result.documents.size > 0) {
+                                val documentSnapshot : DocumentSnapshot = it.result.documents[0]
+                                preferencesManager.putBoolean(Constants.KEY_IS_SIGN_IN, true)
+                                preferencesManager.putString(Constants.KEY_USER_ID, documentSnapshot.id)
+                                preferencesManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME))
+                                preferencesManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE))
+                                val intent : Intent = Intent(applicationContext, MainActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                startActivity(intent)
+                            }
+                        }
                 }
                 else {
                     Toast.makeText(this, "Incorrect email or password. Try again", Toast.LENGTH_SHORT)
@@ -120,6 +148,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT)
                 .show()
         }
+
+
     }
 
     private fun validate(email: String, password:String) =
