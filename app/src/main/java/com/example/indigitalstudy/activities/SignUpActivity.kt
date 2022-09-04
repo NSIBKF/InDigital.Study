@@ -16,7 +16,6 @@ import androidx.core.view.isVisible
 import com.example.indigitalstudy.databinding.ActivitySignUpBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
@@ -26,7 +25,7 @@ import kotlin.collections.HashMap
 class SignUpActivity : AppCompatActivity() {
     lateinit var bindingClass : ActivitySignUpBinding
     lateinit var preferenceManager: PreferenceManager
-    lateinit var encodedImage : String
+    private lateinit var encodedImage : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +47,10 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
         bindingClass.layoutImage.setOnClickListener {
-            val intent:Intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            pickImage.launch(intent)
+                val intent: Intent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                pickImage.launch(intent)
         }
     }
 
@@ -59,30 +59,34 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        loading(true)
-        val database : FirebaseFirestore = FirebaseFirestore.getInstance()
-        val user : HashMap<String, Any> = HashMap()
-        user[Constants.KEY_NAME] = bindingClass.nameInput.text.toString()
-        user[Constants.KEY_EMAIL] = bindingClass.emailInput.text.toString()
-        user[Constants.KEY_PASSWORD] = bindingClass.passwordInput.text.toString()
-        user[Constants.KEY_IMAGE] = encodedImage
-        database.collection(Constants.KEY_COLLECTIONS_USERS)
-            .add(user)
-            .addOnSuccessListener {
-                loading(false)
-                preferenceManager.putBoolean(Constants.KEY_IS_SIGN_IN, true)
-                preferenceManager.putString(Constants.KEY_USER_ID, it.id)
-                preferenceManager.putString(Constants.KEY_NAME, bindingClass.nameInput.text.toString())
-                preferenceManager.putString(Constants.KEY_IMAGE, encodedImage)
 
-                val intent : Intent = Intent(applicationContext, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  / Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
-            }
-            .addOnFailureListener {
-                loading(false)
-                showToast(it.message)
-            }
+            loading(true)
+            val database: FirebaseFirestore = FirebaseFirestore.getInstance()
+            val user: HashMap<String, Any> = HashMap()
+            user[Constants.KEY_NAME] = bindingClass.nameInput.text.toString()
+            user[Constants.KEY_EMAIL] = bindingClass.emailInput.text.toString()
+            user[Constants.KEY_PASSWORD] = bindingClass.passwordInput.text.toString()
+            user[Constants.KEY_IMAGE] = encodedImage
+            database.collection(Constants.KEY_COLLECTIONS_USERS)
+                .add(user)
+                .addOnSuccessListener {
+                    loading(false)
+                    preferenceManager.putBoolean(Constants.KEY_IS_SIGN_IN, true)
+                    preferenceManager.putString(Constants.KEY_USER_ID, it.id)
+                    preferenceManager.putString(
+                        Constants.KEY_NAME,
+                        bindingClass.nameInput.text.toString()
+                    )
+                    preferenceManager.putString(Constants.KEY_IMAGE, encodedImage)
+
+                    val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                }
+                .addOnFailureListener {
+                    loading(false)
+                    showToast(it.message)
+                }
     }
 
     private fun encodeImage(bitmap: Bitmap) : String {
@@ -114,8 +118,12 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun isValidSignUpDetails() : Boolean {
+
         if (bindingClass.nameInput.text.toString().trim().isEmpty()) {
             showToast("Enter name")
+            return false
+        } else if(encodedImage == null) {
+            showToast("Enter image")
             return false
         } else if (bindingClass.emailInput.text.toString().trim().isEmpty()) {
             showToast("Enter email")
@@ -129,12 +137,13 @@ class SignUpActivity : AppCompatActivity() {
         } else if (bindingClass.ConfirmPassword.text.toString().trim().isEmpty()) {
             showToast("Confirm your password")
             return false
-        } else if (!bindingClass.passwordInput.text.toString().equals(bindingClass.ConfirmPassword.text.toString())) {
+        } else if (bindingClass.passwordInput.text.toString() != bindingClass.ConfirmPassword.text.toString()) {
             showToast("Password & Confirm password must be same")
             return false
         } else {
             return true
         }
+
     }
 
     private fun loading(isLoading : Boolean) {
