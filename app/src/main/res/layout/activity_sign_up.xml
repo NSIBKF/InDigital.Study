@@ -31,6 +31,7 @@
         </TextView>
 
         <FrameLayout
+            android:id="@+id/layoutImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -56,7 +57,7 @@
             android:inputType="textEmailAddress"
             android:textColorHint="#5C5656"
             android:hint="@string/name"
-            android:textColor="@color/blue"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:background="@drawable/edit_text_border"/>
 
@@ -71,7 +72,7 @@
             android:inputType="textEmailAddress"
             android:textColorHint="#5C5656"
             android:hint="@string/email"
-            android:textColor="@color/blue"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:background="@drawable/edit_text_border"/>
 
@@ -86,7 +87,7 @@
             android:inputType="textPassword"
             android:textColorHint="#5C5656"
             android:hint="@string/password"
-            android:textColor="@color/blue"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:background="@drawable/edit_text_border"/>
 
@@ -101,22 +102,38 @@
             android:inputType="textPassword"
             android:textColorHint="#5C5656"
             android:hint="@string/confirm_password"
-            android:textColor="@color/blue"
+            android:textColor="@color/black"
             android:padding="10dp"
             android:background="@drawable/edit_text_border"/>
 
-        <Button
-            android:id="@+id/signUp_btn"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="70dp"
-            android:background="@drawable/signup_btn_bg"
-            android:text="@string/sign_up"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            />
+            android:layout_marginTop="16dp"
+            android:animateLayoutChanges="true"
+            >
+            <Button
+                android:id="@+id/signUp_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+
+                android:background="@drawable/signup_btn_bg"
+                android:text="@string/sign_up"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                />
+            <ProgressBar
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/progressBarSignUp"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                />
+        </FrameLayout>
+
+
 
         <TextView
             android:id="@+id/sign_in_text"

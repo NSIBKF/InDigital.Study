@@ -70,9 +70,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (mAuth.currentUser == null) {
-            finish()
-        }
+    //    if (mAuth.currentUser == null) {
+    //        finish()
+     //   }
     }
     override fun onBackPressed() {
         AlertDialog.Builder(this).apply {
