@@ -1,23 +1,24 @@
 package com.example.indigitalstudy.fragments
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.example.indigitalstudy.databinding.FragmentMessagesBinding
+import com.example.indigitalstudy.activities.LoginActivity
 import com.example.indigitalstudy.databinding.FragmentProfileBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.*
 
@@ -27,12 +28,7 @@ import com.jjoe64.graphview.series.*
  */
 class ProfileFragment : Fragment() {
     lateinit var bindingClassProf : FragmentProfileBinding
-    lateinit var sharedPreferences: SharedPreferences
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var preferenceManager : PreferenceManager
-    private val PREFS_NAME: String = "PrefsFile"
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -40,7 +36,6 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
 
-        mAuth = FirebaseAuth.getInstance()
         bindingClassProf = FragmentProfileBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(context)
         // create object with type of GraphView
@@ -63,24 +58,25 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         bindingClassProf.OutBtn.setOnClickListener {
-            sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            val edit: SharedPreferences.Editor = sharedPreferences.edit()
-            edit.clear()
-            edit.apply()
-            Log.d("tag", "файл изменился")
 
-            mAuth.signOut()
-
-            activity?.setResult(101, null)
-            activity?.finish()
+            //Удаление токена и выход
+            val database: FirebaseFirestore = FirebaseFirestore.getInstance()
+            val documentReference : DocumentReference = database.collection(Constants.KEY_COLLECTIONS_USERS).document(
+                preferenceManager.getString(Constants.KEY_USER_ID)
+            )
+            val updates:HashMap<String, Any> = HashMap()
+            updates[Constants.KEY_FCM_TOKEN] = FieldValue.delete()
+            documentReference.update(updates)
+                .addOnSuccessListener {
+                    preferenceManager.clear()
+                    showToast("Token deleted")
+                    startActivity(Intent(context, LoginActivity::class.java))
+                    activity?.finish()
+                }
 
        }
 
 
-    }
-    companion object {
-        @JvmStatic
-        fun newInstance() = ProfileFragment()
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -90,4 +86,10 @@ class ProfileFragment : Fragment() {
         val bitmap : Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
         bindingClassProf.profileImage.setImageBitmap(bitmap)
     }
+
+    private fun showToast(message:String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+
 }

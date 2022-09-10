@@ -11,12 +11,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.DEFAULT_ARGS_KEY
 import com.example.indigitalstudy.databinding.FragmentMessagesBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.common.primitives.Bytes
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 
 /**
@@ -36,7 +40,7 @@ class MessagesFragment : Fragment() {
         binding = FragmentMessagesBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(context)
         loadUserDetails()
-
+        getToken()
         return binding.root
 
     }
@@ -47,5 +51,30 @@ class MessagesFragment : Fragment() {
         val bitmap : Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
         binding.ImageProfile.setImageBitmap(bitmap)
     }
+
+    private fun showToast(message:String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun getToken() {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener(this::updateToken)
+    }
+
+    private fun updateToken(token: String) {
+        val database : FirebaseFirestore = FirebaseFirestore.getInstance()
+        val documentReference : DocumentReference =
+            database.collection(Constants.KEY_COLLECTIONS_USERS).document(
+                preferenceManager.getString(Constants.KEY_USER_ID)
+            )
+        documentReference.update(Constants.KEY_FCM_TOKEN, token)
+            .addOnSuccessListener {
+                showToast("Token updated successfully")
+            }
+            .addOnFailureListener {
+                showToast("Unable to update token")
+            }
+    }
+
+
 
 }
