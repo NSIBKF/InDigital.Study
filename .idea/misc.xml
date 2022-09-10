@@ -3,18 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_icon.xml" value="0.2985" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_image.xml" value="0.18" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_search.xml" value="0.2985" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_settings.xml" value="0.2985" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_message.xml" value="0.2985" />
+        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_search_message.xml" value="0.2985" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/login_btn_bg.xml" value="0.319" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/signup_btn_bg.xml" value="0.319" />
+        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout-v23/fragment_messages.xml" value="0.25" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_main.xml" value="0.20729166666666668" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_sign_up.xml" value="0.5" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_home.xml" value="0.358695652173913" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_messages.xml" value="0.358695652173913" />
+        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_messages.xml" value="0.33" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_profile.xml" value="0.20729166666666668" />
+        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_schedule.xml" value="0.16927083333333334" />
+        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_search.xml" value="0.16927083333333334" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
         <entry key="..\:/New folder/InDigitalStudy/app/src/main/res/drawable/ic_baseline_info.xml" value="0.167" />
         <entry key="..\:/New folder/InDigitalStudy/app/src/main/res/drawable/login_btn_bg.xml" value="0.1865" />

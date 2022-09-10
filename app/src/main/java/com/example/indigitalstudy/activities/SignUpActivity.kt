@@ -122,7 +122,7 @@ class SignUpActivity : AppCompatActivity() {
         if (bindingClass.nameInput.text.toString().trim().isEmpty()) {
             showToast("Enter name")
             return false
-        } else if(encodedImage == null) {
+        } else if(encodedImage == null) {   //баг с картинкой вызывается тут
             showToast("Enter image")
             return false
         } else if (bindingClass.emailInput.text.toString().trim().isEmpty()) {
