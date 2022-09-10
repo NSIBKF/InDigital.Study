@@ -9,18 +9,12 @@
     android:background="@color/background_all"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/layout_bg"
-        android:layout_gravity="top"
-        >
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/avatar_default"
             app:civ_border_color="@color/black"
             app:civ_border_width="2dp" />
@@ -29,14 +23,12 @@
             android:id="@+id/user_name"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:layout_marginTop="55dp"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="130dp"
+            android:textStyle="bold"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white"
             android:textSize="30sp" />
-    </LinearLayout>
 
 
     <LinearLayout
