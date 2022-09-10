@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.indigitalstudy.R
+import com.example.indigitalstudy.databinding.FragmentHomeBinding
 import com.example.indigitalstudy.databinding.FragmentMessagesBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
@@ -20,14 +21,16 @@ import com.google.firebase.messaging.FirebaseMessaging
  */
 class MainFragment : Fragment() {
 
-    private lateinit var binding : FragmentMessagesBinding
+    private lateinit var bindingM : FragmentMessagesBinding
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var preferenceManager : PreferenceManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMessagesBinding.inflate(layoutInflater)
+        bindingM = FragmentMessagesBinding.inflate(layoutInflater)
+        binding = FragmentHomeBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(context)
 
         getToken()
@@ -49,9 +52,6 @@ class MainFragment : Fragment() {
                 preferenceManager.getString(Constants.KEY_USER_ID)
             )
         documentReference.update(Constants.KEY_FCM_TOKEN, token)
-            .addOnSuccessListener {
-                showToast("Token updated successfully")
-            }
             .addOnFailureListener {
                 showToast("Unable to update token")
             }

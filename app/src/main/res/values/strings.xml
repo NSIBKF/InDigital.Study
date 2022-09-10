@@ -18,4 +18,5 @@
     <string name="sign_in">Sign In</string>
     <string name="surname_name">Surname Name</string>
     <string name="log_out">Log Out</string>
+    <string name="select_user">Select User</string>
 </resources>

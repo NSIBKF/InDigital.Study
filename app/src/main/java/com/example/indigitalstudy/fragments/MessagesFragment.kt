@@ -1,5 +1,6 @@
 package com.example.indigitalstudy.fragments
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.DEFAULT_ARGS_KEY
+import com.example.indigitalstudy.activities.UsersActivity
 import com.example.indigitalstudy.databinding.FragmentMessagesBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
@@ -41,6 +43,7 @@ class MessagesFragment : Fragment() {
         preferenceManager = PreferenceManager(context)
         loadUserDetails()
         //getToken()
+        setListeners()
         return binding.root
 
     }
@@ -50,6 +53,12 @@ class MessagesFragment : Fragment() {
         val bytes : ByteArray? = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
         val bitmap : Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
         binding.ImageProfile.setImageBitmap(bitmap)
+    }
+
+    private fun setListeners() {
+        binding.BtnNewChat.setOnClickListener {
+            startActivity(Intent(context, UsersActivity::class.java))
+        }
     }
 
    /* private fun showToast(message:String) {

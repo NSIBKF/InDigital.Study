@@ -27,9 +27,14 @@
             android:screenOrientation="portrait">
 
         </activity>
-
         <activity
             android:name=".activities.SignUpActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activities.UsersActivity"
             android:exported="true"
             android:screenOrientation="portrait">
 
