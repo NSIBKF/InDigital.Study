@@ -40,7 +40,7 @@ class MessagesFragment : Fragment() {
         binding = FragmentMessagesBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(context)
         loadUserDetails()
-        getToken()
+        //getToken()
         return binding.root
 
     }
@@ -52,7 +52,7 @@ class MessagesFragment : Fragment() {
         binding.ImageProfile.setImageBitmap(bitmap)
     }
 
-    private fun showToast(message:String) {
+   /* private fun showToast(message:String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -75,6 +75,6 @@ class MessagesFragment : Fragment() {
             }
     }
 
-
+*/
 
 }

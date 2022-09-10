@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var bindingClass :ActivityMainBinding
     lateinit var sharedPreferences: SharedPreferences
 
-
     private val searchFragment = SearchFragment()
     private val homeFragment = MainFragment()
     private val personFragment = ProfileFragment()
@@ -66,14 +65,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-    override fun onStart() {
-        super.onStart()
-    //    if (mAuth.currentUser == null) {
-    //        finish()
-     //   }
-    }
     override fun onBackPressed() {
         AlertDialog.Builder(this).apply {
             setTitle("Подтверждение")
