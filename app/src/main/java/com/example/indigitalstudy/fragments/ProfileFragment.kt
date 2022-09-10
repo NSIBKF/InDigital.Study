@@ -27,8 +27,14 @@ import com.jjoe64.graphview.series.*
  * A simple [Fragment] subclass.
  */
 class ProfileFragment : Fragment() {
+    private val PREFS_NAME: String = "PrefsFile"
+    private val isLogOutBtnPressedInPFCode: Int = 101
+
     lateinit var bindingClassProf : FragmentProfileBinding
     private lateinit var preferenceManager : PreferenceManager
+    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var mAuth: FirebaseAuth
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -38,9 +44,9 @@ class ProfileFragment : Fragment() {
 
         bindingClassProf = FragmentProfileBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(context)
-        // create object with type of GraphView
+        //create object with type of GraphView
         val graph:GraphView = bindingClassProf.graph
-        // fill our array of data for graph
+        //fill our array of data for graph
         val series: LineGraphSeries<DataPoint> = LineGraphSeries(arrayOf(
             DataPoint(0.0, 1.0),
             DataPoint(1.0, 5.0),
@@ -58,7 +64,11 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         bindingClassProf.OutBtn.setOnClickListener {
-
+            //Очистка файла с ключем о том, что пользователь был запомнен
+            sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            val edit: SharedPreferences.Editor = sharedPreferences.edit()
+            edit.clear()
+            edit.apply()
             //Удаление токена и выход
             val database: FirebaseFirestore = FirebaseFirestore.getInstance()
             val documentReference : DocumentReference = database.collection(Constants.KEY_COLLECTIONS_USERS).document(
@@ -70,12 +80,10 @@ class ProfileFragment : Fragment() {
                 .addOnSuccessListener {
                     preferenceManager.clear()
                     showToast("Token deleted")
-                    startActivity(Intent(context, LoginActivity::class.java))
+                    activity?.setResult(isLogOutBtnPressedInPFCode, null)
                     activity?.finish()
                 }
-
        }
-
 
     }
 

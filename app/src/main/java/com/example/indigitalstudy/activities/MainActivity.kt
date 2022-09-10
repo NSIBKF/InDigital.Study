@@ -15,19 +15,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mAuth: FirebaseAuth
-    lateinit var bindingClass :ActivityMainBinding
-    lateinit var sharedPreferences: SharedPreferences
-
     private val searchFragment = SearchFragment()
     private val homeFragment = MainFragment()
     private val personFragment = ProfileFragment()
     private val scheduleFragment = ScheduleFragment()
     private val messagesFragment = MessagesFragment()
     private val PREFS_NAME: String = "PrefsFile"
+    private val isBackPressedInMACode: Int = 100
+
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var bindingClass: ActivityMainBinding
+    private lateinit var sharedPreferences: SharedPreferences
     private var isBackPressed: Boolean = false
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +35,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(bindingClass.root)
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-
         mAuth = FirebaseAuth.getInstance()
-
-
         replaceFragment(homeFragment)
-
 
         val bottom_navigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottom_navigation.setOnNavigationItemSelectedListener {
@@ -88,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         //intent.getBooleanExtra("key", true)
         //startActivity(Intent(this, LoginActivity::class.java))
-        setResult(100, null)
+        setResult(isBackPressedInMACode, null)
         if (!isBackPressed) {
             val edit: SharedPreferences.Editor = sharedPreferences.edit()
             edit.clear()
