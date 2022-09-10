@@ -19,11 +19,12 @@ import com.jjoe64.graphview.series.*
  * A simple [Fragment] subclass.
  */
 class ProfileFragment : Fragment() {
+    private val PREFS_NAME: String = "PrefsFile"
+    private val isLogOutBtnPressedInPFCode: Int = 101
+
     lateinit var bindingClassProf : FragmentProfileBinding
     lateinit var sharedPreferences: SharedPreferences
     private lateinit var mAuth: FirebaseAuth
-    private val PREFS_NAME: String = "PrefsFile"
-
 
 
     override fun onCreateView(
@@ -33,9 +34,9 @@ class ProfileFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance()
         bindingClassProf = FragmentProfileBinding.inflate(layoutInflater)
-        // create object with type of GraphView
+        //create object with type of GraphView
         val graph:GraphView = bindingClassProf.graph
-        // fill our array of data for graph
+        //fill our array of data for graph
         val series: LineGraphSeries<DataPoint> = LineGraphSeries(arrayOf(
             DataPoint(0.0, 1.0),
             DataPoint(1.0, 5.0),
@@ -57,12 +58,9 @@ class ProfileFragment : Fragment() {
             edit.clear()
             edit.apply()
             Log.d("tag", "файл изменился")
-
             mAuth.signOut()
-
-            activity?.setResult(101, null)
+            activity?.setResult(isLogOutBtnPressedInPFCode, null)
             activity?.finish()
-
        }
 
 
