@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private val PREFS_NAME: String = "PrefsFile"
     private val isLogOutBtnPressedInPFCode: Int = 101
 
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var videoBG: VideoView
     private lateinit var preferencesManager: PreferenceManager
     lateinit var sharedPreferences: SharedPreferences
@@ -83,7 +82,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
         val loginBtn = findViewById<Button>(R.id.login_btn)
         loginBtn.setOnClickListener(this)
-        mAuth = FirebaseAuth.getInstance()
     }
 
     @SuppressLint("CutPasteId")

@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private val PREFS_NAME: String = "PrefsFile"
     private val isBackPressedInMACode: Int = 100
 
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var bindingClass: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
     private var isBackPressed: Boolean = false
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(bindingClass.root)
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-        mAuth = FirebaseAuth.getInstance()
         replaceFragment(homeFragment)
 
         val bottom_navigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
