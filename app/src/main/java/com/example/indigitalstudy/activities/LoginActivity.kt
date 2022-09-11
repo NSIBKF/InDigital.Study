@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.indigitalstudy.R
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
