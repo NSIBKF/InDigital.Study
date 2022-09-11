@@ -1,6 +1,7 @@
 package com.example.indigitalstudy.fragments
 
-import android.content.Intent
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -12,10 +13,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.example.indigitalstudy.activities.LoginActivity
 import com.example.indigitalstudy.databinding.FragmentProfileBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore

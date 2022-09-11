@@ -39,7 +39,8 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun setListeners() {
         bindingClass.signInText.setOnClickListener{
-            onBackPressed()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
         bindingClass.signUpBtn.setOnClickListener {
             if(isValidSignUpDetails()) {
@@ -82,6 +83,7 @@ class SignUpActivity : AppCompatActivity() {
                     val intent: Intent = Intent(applicationContext, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
+                    finish()
                 }
                 .addOnFailureListener {
                     loading(false)

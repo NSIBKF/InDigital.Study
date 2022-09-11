@@ -54,6 +54,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val signUpText = findViewById<TextView>(R.id.sign_up_text)
         signUpText.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
+            finish()
         }
         /* check "did user set option remember me?" */
         if (isRemembered) {
