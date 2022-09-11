@@ -33,6 +33,7 @@ class MessagesFragment : Fragment() {
     private lateinit var binding : FragmentMessagesBinding
     private lateinit var preferenceManager : PreferenceManager
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

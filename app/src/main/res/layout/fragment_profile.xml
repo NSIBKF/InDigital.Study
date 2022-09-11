@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment"
-    android:background="@color/background_all"
-    >
+    android:background="@color/background_all">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -54,8 +53,6 @@
         android:text="@string/log_out"
         android:textAllCaps="false"
         android:textColor="@color/white" />
-
-
 
 
 </FrameLayout>
