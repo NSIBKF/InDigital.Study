@@ -1,17 +1,19 @@
 package com.example.indigitalstudy.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
 import com.example.indigitalstudy.adapters.UsersAdapter
 import com.example.indigitalstudy.databinding.ActivityUsersBinding
+import com.example.indigitalstudy.listeners.UserListener
 import com.example.indigitalstudy.models.User
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 
-class UsersActivity : AppCompatActivity() {
+class UsersActivity : AppCompatActivity(), UserListener {
     private lateinit var binding: ActivityUsersBinding
     private lateinit var preferenceManager: PreferenceManager
 
@@ -50,10 +52,11 @@ class UsersActivity : AppCompatActivity() {
                         user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL)
                         user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE)
                         user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN)
+                        user.id = queryDocumentSnapshot.id
                         users.add(user)
                     }
                     if (users.size > 0) {
-                        val usersAdapter = UsersAdapter(users)
+                        val usersAdapter = UsersAdapter(users, this)
                         binding.usersRecyclerView.adapter = usersAdapter
                         binding.usersRecyclerView.isVisible = true
                     } else {
@@ -72,5 +75,12 @@ class UsersActivity : AppCompatActivity() {
 
     private fun loading(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading
+    }
+
+    override fun onUserClicked(user: User?) {
+        val intent = Intent(applicationContext, ChatActivity::class.java)
+        intent.putExtra(Constants.KEY_USER, user)
+        startActivity(intent)
+        finish()
     }
 }
