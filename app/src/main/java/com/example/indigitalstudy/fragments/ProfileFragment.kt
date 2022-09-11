@@ -30,9 +30,9 @@ class ProfileFragment : Fragment() {
     private val fPrefName: String = "PrefsFile"
     private val isLogOutBtnPressedInPFCode: Int = 101
 
-    lateinit var bindingClassProf : FragmentProfileBinding
-    private lateinit var preferenceManager : PreferenceManager
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var bindingClassProf: FragmentProfileBinding
+    private lateinit var preferenceManager: PreferenceManager
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
         bindingClassProf = FragmentProfileBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(context)
         //create object with type of GraphView
-        val graph:GraphView = bindingClassProf.graph
+        val graph: GraphView = bindingClassProf.graph
         //fill our array of data for graph
         val series: LineGraphSeries<DataPoint> = LineGraphSeries(arrayOf(
             DataPoint(0.0, 1.0),
@@ -58,7 +58,6 @@ class ProfileFragment : Fragment() {
 
         return bindingClassProf.root
 
-
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -67,7 +66,7 @@ class ProfileFragment : Fragment() {
             clearFile(fPrefName)
             //Удаление токена и выход
             val database: FirebaseFirestore = FirebaseFirestore.getInstance()
-            val documentReference : DocumentReference = database.collection(Constants.KEY_COLLECTIONS_USERS).document(
+            val documentReference: DocumentReference = database.collection(Constants.KEY_COLLECTIONS_USERS).document(
                 preferenceManager.getString(Constants.KEY_USER_ID)
             )
             val updates:HashMap<String, Any> = HashMap()

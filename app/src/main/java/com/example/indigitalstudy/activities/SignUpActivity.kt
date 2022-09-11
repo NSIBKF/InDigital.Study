@@ -23,9 +23,9 @@ import java.io.InputStream
 import kotlin.collections.HashMap
 
 class SignUpActivity : AppCompatActivity() {
-    lateinit var bindingClass : ActivitySignUpBinding
+    private lateinit var bindingClass: ActivitySignUpBinding
     lateinit var preferenceManager: PreferenceManager
-    private lateinit var encodedImage : String
+    private lateinit var encodedImage: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,17 +91,17 @@ class SignUpActivity : AppCompatActivity() {
                 }
     }
 
-    private fun encodeImage(bitmap: Bitmap) : String {
+    private fun encodeImage(bitmap: Bitmap): String {
         val previewWidth = 150
         val previewHeight = bitmap.height * previewWidth / bitmap.width
-        val previewBitmap : Bitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false)
-        val byteArrayOutputStream : ByteArrayOutputStream = ByteArrayOutputStream()
+        val previewBitmap: Bitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, true)
+        val byteArrayOutputStream = ByteArrayOutputStream()
         previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream)
-        val bytes : ByteArray = byteArrayOutputStream.toByteArray()
+        val bytes: ByteArray = byteArrayOutputStream.toByteArray()
         return Base64.encodeToString(bytes, Base64.DEFAULT)
     }
 
-    private var pickImage : ActivityResultLauncher <Intent> = registerForActivityResult(
+    private var pickImage: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == RESULT_OK) {
@@ -119,36 +119,31 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun isValidSignUpDetails() : Boolean {
+    private fun isValidSignUpDetails(): Boolean {
+        var result = false
 
         if (bindingClass.nameInput.text.toString().trim().isEmpty()) {
             showToast("Enter name")
-            return false
         } else if(encodedImage == null) {   //баг с картинкой вызывается тут
             showToast("Enter image")
-            return false
         } else if (bindingClass.emailInput.text.toString().trim().isEmpty()) {
             showToast("Enter email")
-            return false
         } else if (!Patterns.EMAIL_ADDRESS.matcher(bindingClass.emailInput.text.toString()).matches()) {
             showToast("Enter valid email")
-            return false
         } else if (bindingClass.passwordInput.text.toString().trim().isEmpty()) {
             showToast("Enter password")
-            return false
         } else if (bindingClass.ConfirmPassword.text.toString().trim().isEmpty()) {
             showToast("Confirm your password")
-            return false
         } else if (bindingClass.passwordInput.text.toString() != bindingClass.ConfirmPassword.text.toString()) {
             showToast("Password & Confirm password must be same")
-            return false
         } else {
-            return true
+            result = true
         }
+        return result
 
     }
 
-    private fun loading(isLoading : Boolean) {
+    private fun loading(isLoading: Boolean) {
         if(isLoading) {
             bindingClass.signUpBtn.isVisible = false
             bindingClass.progressBarSignUp.isVisible = true

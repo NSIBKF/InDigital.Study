@@ -12,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 
 class UsersActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityUsersBinding
+    private lateinit var binding: ActivityUsersBinding
     private lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {

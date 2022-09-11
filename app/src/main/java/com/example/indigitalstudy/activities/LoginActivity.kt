@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.indigitalstudy.R
+import com.example.indigitalstudy.databinding.ActivityLoginBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.firestore.DocumentSnapshot
@@ -23,6 +24,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private val fPrefName: String = "PrefsFile"
     private val isLogOutBtnPressedInPFCode: Int = 101
 
+    private lateinit var bindingClass: ActivityLoginBinding
     private lateinit var videoBG: VideoView
     private lateinit var preferencesManager: PreferenceManager
     lateinit var sharedPreferences: SharedPreferences
@@ -34,7 +36,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        bindingClass = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(bindingClass.root)
         preferencesManager = PreferenceManager(applicationContext)
         /* getting a value from file contains a key for isRemember */
         sharedPreferences = getSharedPreferences(fPrefName, Context.MODE_PRIVATE)
@@ -43,8 +46,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         mainLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result: ActivityResult ->
             if (result.resultCode == isLogOutBtnPressedInPFCode) {
-                findViewById<EditText>(R.id.email_input).text = null
-                findViewById<EditText>(R.id.password_input).text = null
+                bindingClass.emailInput.text = null
+                bindingClass.passwordInput.text = null
                 //example "how can we get a data from another activity?"
                 //val text = result.data?.getStringExtra("key1")
             }
@@ -55,7 +58,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         }
         /* loading background video  */
-        videoBG = findViewById<VideoView>(R.id.videoView)
+        videoBG = bindingClass.videoView
         val uri = Uri.parse("android.resource://"
                 + packageName
                 + "/"
@@ -63,13 +66,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         )
         loadBGVideo(uri)
         /* actions if user will click on sign up button */
-        val signUpText = findViewById<TextView>(R.id.sign_up_text)
+        val signUpText = bindingClass.signUpText
         signUpText.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
             finish()
         }
         /* Actions if user will click on login button */
-        val loginBtn = findViewById<Button>(R.id.login_btn)
+        val loginBtn = bindingClass.loginBtn
         loginBtn.setOnClickListener(this)
     }
 
@@ -89,10 +92,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     @SuppressLint("CutPasteId")
     override fun onClick(view: View) {
         /* All actions when we try to log in */
-        val rememberMe = findViewById<CheckBox>(R.id.remember_me)
+        val rememberMe = bindingClass.rememberMe
         val checked: Boolean = rememberMe.isChecked
-        val email = findViewById<EditText>(R.id.email_input).text.toString()
-        val password = findViewById<EditText>(R.id.password_input).text.toString()
+        val email = bindingClass.emailInput.text.toString()
+        val password = bindingClass.passwordInput.text.toString()
 
          if (validate(email, password)) {
                     val database: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -117,7 +120,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 finish()
                             } else {
                                 showToast("Incorrect email or password. Try again")
-                                findViewById<EditText>(R.id.password_input).text = null
+                                bindingClass.passwordInput.text = null
                             }
                         }
          } else {
