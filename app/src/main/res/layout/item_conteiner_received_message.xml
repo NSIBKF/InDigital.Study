@@ -13,7 +13,6 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@id/textMessage"
         app:layout_constraintStart_toStartOf="parent"
-        app:riv_oval="true"
         />
 
     <TextView
