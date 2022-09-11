@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var bindingClass: ActivityLoginBinding
     private lateinit var videoBG: VideoView
     private lateinit var preferencesManager: PreferenceManager
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
     private var mMediaPlayer: MediaPlayer? = null
     private var mCurrentVideoPosition: Int = 0
     private var isRemembered: Boolean = false
