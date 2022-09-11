@@ -19,4 +19,7 @@
     <string name="surname_name">Surname Name</string>
     <string name="log_out">Log Out</string>
     <string name="select_user">Select User</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="ok">OK</string>
+    <string name="confirm_email">Confirm email</string>
 </resources>

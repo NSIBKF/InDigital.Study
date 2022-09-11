@@ -67,9 +67,12 @@
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/fragment_profile.xml" value="0.28125" />
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/fragment_schedule.xml" value="0.5546875" />
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/fragment_search.xml" value="0.5546875" />
-        <entry key="..\:/inDigital_pub_1/InDigital.Study/app/src/main/res/layout/activity_login.xml" value="0.19858156028368795" />
+        <entry key="..\:/inDigital_pub_1/InDigital.Study/app/src/main/res/drawable/signup_btn_bg.xml" value="0.394" />
+        <entry key="..\:/inDigital_pub_1/InDigital.Study/app/src/main/res/layout/activity_confirm_email.xml" value="0.3333333333333333" />
+        <entry key="..\:/inDigital_pub_1/InDigital.Study/app/src/main/res/layout/activity_login.xml" value="0.3333333333333333" />
+        <entry key="..\:/inDigital_pub_1/InDigital.Study/app/src/main/res/layout/activity_sign_up.xml" value="0.39427083333333335" />
         <entry key="..\:/inDigital_pub_1/InDigital.Study/app/src/main/res/layout/activity_users.xml" value="0.19858156028368795" />
-        <entry key="..\:/inDigital_pub_1/InDigital.Study/app/src/main/res/layout/fragment_profile.xml" value="0.17844202898550723" />
+        <entry key="..\:/inDigital_pub_1/InDigital.Study/app/src/main/res/layout/fragment_profile.xml" value="0.3333333333333333" />
       </map>
     </option>
   </component>
