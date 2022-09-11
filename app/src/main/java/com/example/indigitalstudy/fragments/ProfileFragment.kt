@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import com.example.indigitalstudy.databinding.FragmentProfileBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,13 +27,12 @@ import com.jjoe64.graphview.series.*
  * A simple [Fragment] subclass.
  */
 class ProfileFragment : Fragment() {
-    private val PREFS_NAME: String = "PrefsFile"
+    private val fPrefName: String = "PrefsFile"
     private val isLogOutBtnPressedInPFCode: Int = 101
 
     lateinit var bindingClassProf : FragmentProfileBinding
     private lateinit var preferenceManager : PreferenceManager
     lateinit var sharedPreferences: SharedPreferences
-    private lateinit var mAuth: FirebaseAuth
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -66,10 +64,7 @@ class ProfileFragment : Fragment() {
 
         bindingClassProf.OutBtn.setOnClickListener {
             //Очистка файла с ключем о том, что пользователь был запомнен
-            sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            val edit: SharedPreferences.Editor = sharedPreferences.edit()
-            edit.clear()
-            edit.apply()
+            clearFile(fPrefName)
             //Удаление токена и выход
             val database: FirebaseFirestore = FirebaseFirestore.getInstance()
             val documentReference : DocumentReference = database.collection(Constants.KEY_COLLECTIONS_USERS).document(
@@ -94,6 +89,13 @@ class ProfileFragment : Fragment() {
         val bytes : ByteArray? = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
         val bitmap : Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
         bindingClassProf.profileImage.setImageBitmap(bitmap)
+    }
+
+    private fun clearFile(fileName: String) {
+        sharedPreferences = requireActivity().getSharedPreferences(fileName, Context.MODE_PRIVATE)
+        val edit: SharedPreferences.Editor = sharedPreferences.edit()
+        edit.clear()
+        edit.apply()
     }
 
     private fun showToast(message:String) {

@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResult
@@ -21,7 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
-    private val PREFS_NAME: String = "PrefsFile"
+    private val fPrefName: String = "PrefsFile"
     private val isLogOutBtnPressedInPFCode: Int = 101
 
     private lateinit var videoBG: VideoView
@@ -37,8 +36,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         preferencesManager = PreferenceManager(applicationContext)
-        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        /* getting a value from file contains a key for isRemember */
+        sharedPreferences = getSharedPreferences(fPrefName, Context.MODE_PRIVATE)
         isRemembered = sharedPreferences.getBoolean("CHECK_BOX", false)
+        /* conditions for any ways of using result codes from MainActivity */
         mainLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result: ActivityResult ->
             if (result.resultCode == isLogOutBtnPressedInPFCode) {
@@ -48,20 +49,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 //val text = result.data?.getStringExtra("key1")
             }
         }
-        /* actions if user click on sign up button */
-        val signUpText = findViewById<TextView>(R.id.sign_up_text)
-        signUpText.setOnClickListener {
-            startActivity(Intent(this, SignUpActivity::class.java))
-            finish()
-        }
         /* check "did user set option remember me?" */
         if (isRemembered) {
-            //val i = Intent(this, MainActivity::class.java)
-            //startActivityForResult(i, isBackPressedInMACode)
             mainLauncher?.launch(Intent(this, MainActivity::class.java))
             finish()
         }
-        Log.d("AL_M", "onCreateLA_M")
         /* loading background video  */
         videoBG = findViewById<VideoView>(R.id.videoView)
         val uri = Uri.parse("android.resource://"
@@ -69,6 +61,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 + "/"
                 + R.raw.background_login_activity
         )
+        loadBGVideo(uri)
+        /* actions if user will click on sign up button */
+        val signUpText = findViewById<TextView>(R.id.sign_up_text)
+        signUpText.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
+            finish()
+        }
+        /* Actions if user will click on login button */
+        val loginBtn = findViewById<Button>(R.id.login_btn)
+        loginBtn.setOnClickListener(this)
+    }
+
+    private fun loadBGVideo(uri: Uri?) {
         videoBG.setVideoURI(uri)
         videoBG.start()
         videoBG.setOnPreparedListener {
@@ -79,8 +84,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 mMediaPlayer!!.start()
             }
         }
-        val loginBtn = findViewById<Button>(R.id.login_btn)
-        loginBtn.setOnClickListener(this)
     }
 
     @SuppressLint("CutPasteId")
@@ -92,14 +95,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val password = findViewById<EditText>(R.id.password_input).text.toString()
 
          if (validate(email, password)) {
-                    val database : FirebaseFirestore = FirebaseFirestore.getInstance()
+                    val database: FirebaseFirestore = FirebaseFirestore.getInstance()
                     database.collection(Constants.KEY_COLLECTIONS_USERS)
                         .whereEqualTo(Constants.KEY_EMAIL, email)
                         .whereEqualTo(Constants.KEY_PASSWORD, password)
                         .get()
                         .addOnCompleteListener {
                             if(it.isSuccessful && it.result != null && it.result.documents.size > 0) {
-                                //заносим ключ файл, чтобы сохранить данные о входе в аккаунт каждый раз
+                                //заносим ключ в файл, чтобы сохранить данные о запоминании входа
                                 val edit: SharedPreferences.Editor = sharedPreferences.edit()
                                 edit.putBoolean("CHECK_BOX", checked)
                                 edit.apply()
@@ -108,27 +111,27 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 preferencesManager.putString(Constants.KEY_USER_ID, documentSnapshot.id)
                                 preferencesManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME))
                                 preferencesManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE))
-                                val intent : Intent = Intent(applicationContext, MainActivity::class.java)
+                                val intent: Intent = Intent(applicationContext, MainActivity::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                //val i = Intent(this, MainActivity::class.java)
-                                //startActivityForResult(i, isBackPressedInMACode)
                                 mainLauncher?.launch(intent)
                                 finish()
                             } else {
-                                Toast.makeText(this, "Incorrect email or password. Try again", Toast.LENGTH_SHORT)
-                                    .show()
+                                showToast("Incorrect email or password. Try again")
                                 findViewById<EditText>(R.id.password_input).text = null
                             }
                         }
          } else {
-            Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT)
-                .show()
+             showToast("Please enter email and password")
          }
 
     }
 
     private fun validate(email: String, password:String) =
         email.isNotEmpty() && password.isNotEmpty()
+
+    private fun showToast(message: String?) {
+            Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onPause() {
         super.onPause()
@@ -147,6 +150,5 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             mMediaPlayer!!.release()
             mMediaPlayer = null
         }
-        //setResult(100, null)
     }
 }
