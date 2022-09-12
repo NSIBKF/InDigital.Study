@@ -18,8 +18,6 @@ import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
