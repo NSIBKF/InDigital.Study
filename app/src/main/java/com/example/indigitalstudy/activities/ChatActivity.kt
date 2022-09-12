@@ -3,9 +3,11 @@ package com.example.indigitalstudy.activities
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.example.indigitalstudy.adapters.ChatAdapter
 import com.example.indigitalstudy.databinding.ActivityChatBinding
@@ -16,6 +18,8 @@ import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -28,6 +32,9 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var database: FirebaseFirestore
 
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
@@ -60,6 +67,9 @@ class ChatActivity : AppCompatActivity() {
         binding.inputMessage.text = null
     }
 
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun listenMessages() {
         database.collection(Constants.KEY_COLLECTION_CHAT)
             .whereEqualTo(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID))
@@ -71,6 +81,10 @@ class ChatActivity : AppCompatActivity() {
             .addSnapshotListener(eventListener)
     }
 
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("NotifyDataSetChanged")
     private val eventListener =
         EventListener { value: QuerySnapshot?, error: FirebaseFirestoreException? ->
@@ -92,6 +106,7 @@ class ChatActivity : AppCompatActivity() {
                         chatMessages.add(chatMessage)
                     }
                 }
+                chatMessages.sortWith(compareBy { it.dateObject })
                 //Вот эту команду в коментарии надо превратить в код на котлин(пока что она на java)
                 //Collections.sort(chatMessages, (a,b) -> a.dateObject.compareTo(b.dateObject));
                 //без этой строки сообщение не сортируются

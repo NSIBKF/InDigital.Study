@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_image.xml" value="0.18" />
+        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_received_message.xml" value="0.24" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_search.xml" value="0.2985" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_settings.xml" value="0.2985" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_message.xml" value="0.2985" />
@@ -17,7 +18,7 @@
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_home.xml" value="0.358695652173913" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_messages.xml" value="0.358695652173913" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_profile.xml" value="0.20729166666666668" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/item_container_sent_message.xml" value="0.3605072463768116" />
+        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/item_container_sent_message.xml" value="0.9" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/item_conteiner_received_message.xml" value="0.3605072463768116" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
         <entry key="..\:/New folder/InDigitalStudy/app/src/main/res/drawable/ic_baseline_info.xml" value="0.167" />
