@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import androidx.annotation.RequiresApi
@@ -24,7 +23,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : BaseActivity() {
     private lateinit var binding: ActivityChatBinding
     private lateinit var receiverUser : User
     private lateinit var chatMessages : MutableList<ChatMessage>
@@ -32,6 +31,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var database: FirebaseFirestore
     private var conversionId : String? = null
+    private var isReceiverAvailable : Boolean = false
+
 
 
 
@@ -82,7 +83,24 @@ class ChatActivity : AppCompatActivity() {
         binding.inputMessage.text = null
     }
 
-
+    private fun listenAvailabilityOfReceiver() {
+        database.collection(Constants.KEY_COLLECTIONS_USERS).document(
+            receiverUser.id
+        ).addSnapshotListener{value, error ->
+            if(error != null) {
+                return@addSnapshotListener
+            }
+            if(value != null) {
+                if(value.getLong(Constants.KEY_AVAILABILITY) != null) {
+                    val availability : Any? = Objects.requireNonNull(
+                        value.getLong(Constants.KEY_AVAILABILITY)
+                    ) // возможно тут баг
+                    isReceiverAvailable = availability == 1
+                }
+            }
+            binding.textAvailability.isVisible = isReceiverAvailable
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun listenMessages() {
@@ -208,5 +226,10 @@ class ChatActivity : AppCompatActivity() {
             val documentSnapshot = task.result!!.documents[0]
             conversionId = documentSnapshot.id
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        listenAvailabilityOfReceiver()
     }
 }

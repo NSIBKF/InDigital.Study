@@ -10,7 +10,7 @@ import com.example.indigitalstudy.databinding.ActivityMainBinding
 import com.example.indigitalstudy.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private val searchFragment = SearchFragment()
     private val homeFragment = MainFragment()
     private val personFragment = ProfileFragment()

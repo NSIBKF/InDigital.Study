@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import com.example.indigitalstudy.activities.BaseActivity
 import com.example.indigitalstudy.activities.ChatActivity
 import com.example.indigitalstudy.activities.UsersActivity
 import com.example.indigitalstudy.adapters.RecentConversationsAdapter

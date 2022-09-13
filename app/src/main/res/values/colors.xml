@@ -13,4 +13,5 @@
     <color name="grey">#9E9D9D</color>
     <color name="mainColor">#8D21B2</color>
     <color name="sentMessageColor">#2435CF</color>
+    <color name="green">#008000</color>
 </resources>
