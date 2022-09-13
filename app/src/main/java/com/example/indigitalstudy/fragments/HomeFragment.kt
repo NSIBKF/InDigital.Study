@@ -45,6 +45,7 @@ class MainFragment : Fragment() {
     }
 
     private fun updateToken(token: String) {
+        preferenceManager.putString(Constants.KEY_FCM_TOKEN, token)
         val database : FirebaseFirestore = FirebaseFirestore.getInstance()
         val documentReference : DocumentReference =
             database.collection(Constants.KEY_COLLECTIONS_USERS).document(

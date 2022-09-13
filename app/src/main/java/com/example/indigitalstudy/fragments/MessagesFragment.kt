@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
-import com.example.indigitalstudy.activities.BaseActivity
 import com.example.indigitalstudy.activities.ChatActivity
 import com.example.indigitalstudy.activities.UsersActivity
 import com.example.indigitalstudy.adapters.RecentConversationsAdapter
@@ -52,7 +51,6 @@ class MessagesFragment : Fragment(), ConversionListener {
         preferenceManager = PreferenceManager(context)
         loadUserDetails()
         init()
-        //getToken()
         setListeners()
         listenConversations()
         return binding.root
@@ -137,34 +135,8 @@ class MessagesFragment : Fragment(), ConversionListener {
                 }
 
     override fun onConversionClicked(user: User?) {
-        val intent : Intent = Intent(context, ChatActivity::class.java)
+        val intent = Intent(context, ChatActivity::class.java)
         intent.putExtra(Constants.KEY_USER, user)
         startActivity(intent)
     }
-
-    /* private fun showToast(message:String) {
-         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-     }
-
-     private fun getToken() {
-         FirebaseMessaging.getInstance().token.addOnSuccessListener(this::updateToken)
-     }
-
-     private fun updateToken(token: String) {
-         val database : FirebaseFirestore = FirebaseFirestore.getInstance()
-         val documentReference : DocumentReference =
-             database.collection(Constants.KEY_COLLECTIONS_USERS).document(
-                 preferenceManager.getString(Constants.KEY_USER_ID)
-             )
-         documentReference.update(Constants.KEY_FCM_TOKEN, token)
-             .addOnSuccessListener {
-                 showToast("Token updated successfully")
-             }
-             .addOnFailureListener {
-                 showToast("Unable to update token")
-             }
-     }
-
- */
-
 }
