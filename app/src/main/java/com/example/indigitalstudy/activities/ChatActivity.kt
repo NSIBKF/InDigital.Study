@@ -92,9 +92,9 @@ class ChatActivity : BaseActivity() {
             }
             if(value != null) {
                 if(value.getLong(Constants.KEY_AVAILABILITY) != null) {
-                    val availability : Any? = Objects.requireNonNull(
+                    val availability : Any = Objects.requireNonNull(
                         value.getLong(Constants.KEY_AVAILABILITY)
-                    ) // возможно тут баг
+                    ).toString().toInt()
                     isReceiverAvailable = availability == 1
                 }
             }
