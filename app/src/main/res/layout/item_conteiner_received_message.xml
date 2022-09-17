@@ -28,7 +28,7 @@
         android:maxWidth="300dp"
         app:layout_constraintWidth_max="wrap"
         android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@id/ImageProfile"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.75"

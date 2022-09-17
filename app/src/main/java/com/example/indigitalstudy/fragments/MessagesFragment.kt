@@ -29,15 +29,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 
 
-/**
- * A simple [Fragment] subclass.
- */
 class MessagesFragment : Fragment(), ConversionListener {
 
-    private lateinit var binding : FragmentMessagesBinding
-    private lateinit var preferenceManager : PreferenceManager
-    private lateinit var conversations : MutableList<ChatMessage>
-    private lateinit var conversationsAdapter : RecentConversationsAdapter
+    private lateinit var binding: FragmentMessagesBinding
+    private lateinit var preferenceManager: PreferenceManager
+    private lateinit var conversations: MutableList<ChatMessage>
+    private lateinit var conversationsAdapter: RecentConversationsAdapter
     private lateinit var database: FirebaseFirestore
 
 
@@ -67,8 +64,8 @@ class MessagesFragment : Fragment(), ConversionListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun loadUserDetails() {
         binding.textName.text = preferenceManager.getString(Constants.KEY_NAME)
-        val bytes : ByteArray? = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
-        val bitmap : Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
+        val bytes: ByteArray? = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
+        val bitmap: Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
         binding.ImageProfile.setImageBitmap(bitmap)
     }
 
@@ -102,7 +99,7 @@ class MessagesFragment : Fragment(), ConversionListener {
                                 val chatMessage = ChatMessage()
                                 chatMessage.senderId = senderId
                                 chatMessage.receiverId = receiverId
-                                if(preferenceManager.getString(Constants.KEY_USER_ID).equals(senderId)) {
+                                if (preferenceManager.getString(Constants.KEY_USER_ID).equals(senderId)) {
                                     chatMessage.conversionImage = documentChange.document.getString(Constants.KEY_RECEIVER_IMAGE)
                                     chatMessage.conversionName = documentChange.document.getString(Constants.KEY_RECEIVER_NAME)
                                     chatMessage.conversionId = documentChange.document.getString(Constants.KEY_RECEIVER_ID)
@@ -114,9 +111,9 @@ class MessagesFragment : Fragment(), ConversionListener {
                                 chatMessage.message = documentChange.document.getString(Constants.KEY_LAST_MESSAGE)
                                 chatMessage.dateObject = documentChange.document.getDate(Constants.KEY_TIMESTAMP)
                                 conversations.add(chatMessage)
-                            } else if(documentChange.type == DocumentChange.Type.MODIFIED) {
+                            } else if (documentChange.type == DocumentChange.Type.MODIFIED) {
                                 for (i in conversations.indices) {
-                                    val senderId : String? = documentChange.document.getString(Constants.KEY_SENDER_ID)
+                                    val senderId: String? = documentChange.document.getString(Constants.KEY_SENDER_ID)
                                     val receiverId: String? = documentChange.document.getString(Constants.KEY_RECEIVER_ID)
                                     if(conversations[i].senderId.equals(senderId) && conversations[i].receiverId.equals(receiverId)) {
                                         conversations[i].message = documentChange.document.getString(Constants.KEY_LAST_MESSAGE)

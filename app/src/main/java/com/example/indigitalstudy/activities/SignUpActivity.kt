@@ -48,7 +48,7 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
         bindingClass.layoutImage.setOnClickListener {
-                val intent: Intent =
+                val intent =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 pickImage.launch(intent)
@@ -80,7 +80,7 @@ class SignUpActivity : AppCompatActivity() {
                     )
                     preferenceManager.putString(Constants.KEY_IMAGE, encodedImage)
 
-                    val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+                    val intent = Intent(applicationContext, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                     finish()
@@ -124,7 +124,7 @@ class SignUpActivity : AppCompatActivity() {
 
         if (bindingClass.nameInput.text.toString().trim().isEmpty()) {
             showToast("Enter name")
-        } else if(encodedImage == null) {   //баг с картинкой вызывается тут
+        } else if (encodedImage == null) {   //баг с картинкой вызывается тут
             showToast("Enter image")
         } else if (bindingClass.emailInput.text.toString().trim().isEmpty()) {
             showToast("Enter email")
@@ -144,7 +144,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun loading(isLoading: Boolean) {
-        if(isLoading) {
+        if (isLoading) {
             bindingClass.signUpBtn.isVisible = false
             bindingClass.progressBarSignUp.isVisible = true
         } else {
