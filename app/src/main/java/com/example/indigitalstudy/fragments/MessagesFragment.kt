@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import androidx.core.view.size
 import com.example.indigitalstudy.activities.ChatActivity
 import com.example.indigitalstudy.activities.UsersActivity
 import com.example.indigitalstudy.adapters.RecentConversationsAdapter
@@ -50,6 +52,7 @@ class MessagesFragment : Fragment(), ConversionListener {
         init()
         setListeners()
         listenConversations()
+        binding.notFunnyText.isVisible = binding.conversationsRecyclerView.size == 0
         return binding.root
 
     }
@@ -91,7 +94,6 @@ class MessagesFragment : Fragment(), ConversionListener {
                         return@EventListener
                     }
                     if (value != null) {
-                        binding.notFunnyText.isVisible = false
                         for (documentChange in value.documentChanges) {
                             if (documentChange.type == DocumentChange.Type.ADDED) {
                                 val senderId = documentChange.document.getString(Constants.KEY_SENDER_ID)
@@ -132,9 +134,19 @@ class MessagesFragment : Fragment(), ConversionListener {
                     }
                 }
 
+    override fun onStop() {
+        super.onStop()
+        binding.notFunnyText.isVisible = binding.conversationsRecyclerView.size == 0
+    }
+
     override fun onConversionClicked(user: User?) {
         val intent = Intent(context, ChatActivity::class.java)
         intent.putExtra(Constants.KEY_USER, user)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(context, "msgs_onDestroy", Toast.LENGTH_SHORT).show()
     }
 }
