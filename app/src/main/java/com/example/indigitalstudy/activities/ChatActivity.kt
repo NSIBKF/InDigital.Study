@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Base64
 import android.widget.Toast
 import androidx.annotation.NonNull
@@ -30,7 +29,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.create
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,6 +71,7 @@ class ChatActivity : BaseActivity() {
     }
 
     private fun sendMessage() {
+
         val message : HashMap<String, Any> = HashMap()
         message[Constants.KEY_SENDER_ID] = preferenceManager.getString(Constants.KEY_USER_ID)
         message[Constants.KEY_RECEIVER_ID] = receiverUser.id
@@ -93,6 +92,8 @@ class ChatActivity : BaseActivity() {
             conversion[Constants.KEY_TIMESTAMP] = Date()
             addConversion(conversion)
         }
+
+
         if(!isReceiverAvailable) {
             try {
                 val tokens : JSONArray = JSONArray()
@@ -247,7 +248,7 @@ class ChatActivity : BaseActivity() {
         binding.imageBack.setOnClickListener {
             onBackPressed()
         }
-        binding.layoutSend.setOnClickListener {
+        binding.sendBtn.setOnClickListener {
             sendMessage()
         }
         binding.layoutEmoji.setOnClickListener {

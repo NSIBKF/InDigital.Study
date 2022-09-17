@@ -1,7 +1,6 @@
 package com.example.indigitalstudy.adapters;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 

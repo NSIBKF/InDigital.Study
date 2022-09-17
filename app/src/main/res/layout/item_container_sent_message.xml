@@ -17,7 +17,7 @@
         android:maxWidth="300dp"
         android:paddingBottom="8dp"
         android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_max="wrap"

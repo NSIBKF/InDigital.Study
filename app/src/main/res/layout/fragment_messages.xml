@@ -78,5 +78,18 @@
             android:layout_gravity="center"
             />
 
+        <TextView
+            android:id="@+id/notFunnyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="30sp"
+            android:textColor="@color/grey"
+            android:text="@string/you_need_to_start_communication_press_to_start_talk_with_someone"
+            android:gravity="center"
+            />
+
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

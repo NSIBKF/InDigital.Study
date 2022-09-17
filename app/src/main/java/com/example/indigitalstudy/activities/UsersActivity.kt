@@ -1,7 +1,6 @@
 package com.example.indigitalstudy.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
 import com.example.indigitalstudy.adapters.UsersAdapter

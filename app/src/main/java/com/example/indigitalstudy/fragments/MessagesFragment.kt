@@ -94,6 +94,7 @@ class MessagesFragment : Fragment(), ConversionListener {
                         return@EventListener
                     }
                     if (value != null) {
+                        binding.notFunnyText.isVisible = false
                         for (documentChange in value.documentChanges) {
                             if (documentChange.type == DocumentChange.Type.ADDED) {
                                 val senderId = documentChange.document.getString(Constants.KEY_SENDER_ID)
