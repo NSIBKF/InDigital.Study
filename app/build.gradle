@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.example.indigitalstudy"
         minSdk 21
-        targetSdk 32
+        targetSdk 26
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -65,4 +65,7 @@ dependencies {
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+    //emoji
+    implementation 'com.vanniktech:emoji-google:0.15.0'
 }

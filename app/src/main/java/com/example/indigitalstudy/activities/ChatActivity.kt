@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Base64
 import android.widget.Toast
 import androidx.annotation.NonNull
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
+import com.vanniktech.emoji.EmojiPopup
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -248,6 +250,9 @@ class ChatActivity : BaseActivity() {
         binding.layoutSend.setOnClickListener {
             sendMessage()
         }
+        binding.layoutEmoji.setOnClickListener {
+            emoji()
+        }
     }
 
     private fun getReadableDateTime(date: Date): String {
@@ -302,6 +307,13 @@ class ChatActivity : BaseActivity() {
         ) {
             val documentSnapshot = task.result!!.documents[0]
             conversionId = documentSnapshot.id
+        }
+    }
+
+    private fun emoji() {
+        val emojiPopup : EmojiPopup = EmojiPopup(binding.layoutEmoji, binding.inputMessage)
+        binding.layoutEmoji.setOnClickListener {
+            emojiPopup.toggle()
         }
     }
 
