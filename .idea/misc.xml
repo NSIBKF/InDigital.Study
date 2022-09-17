@@ -3,50 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_chat_input.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_content_bottom.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_icon.xml" value="0.2075" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_image.xml" value="0.18" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_received_message.xml" value="0.24" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/background_sent_message.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/edit_text_border.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_add_message.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_add_new_message.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_back.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_home.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_person.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_schedule.xml" value="0.2075" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_search.xml" value="0.2985" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_baseline_settings.xml" value="0.2985" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_emoji.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2075" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_message.xml" value="0.2985" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_more_options.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_notifications.xml" value="0.2405" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_search_message.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/ic_send.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/layout_bg.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/layout_bg1.xml" value="0.2075" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/login_btn_bg.xml" value="0.319" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/online_mark.xml" value="0.2405" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/signup_btn_bg.xml" value="0.319" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/drawable/top_border_grey.xml" value="0.2075" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_chat.xml" value="0.33" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_confirm_email.xml" value="0.3605072463768116" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_main.xml" value="0.20729166666666668" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_sign_up.xml" value="0.5" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/activity_users.xml" value="0.36666666666666664" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/choice_apload.xml" value="0.358695652173913" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_home.xml" value="0.358695652173913" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_messages.xml" value="0.358695652173913" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_profile.xml" value="0.20729166666666668" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_schedule.xml" value="0.358695652173913" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/fragment_search.xml" value="0.358695652173913" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/item_container_recent_conversion.xml" value="0.9" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/item_container_sent_message.xml" value="0.9" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/item_container_user.xml" value="0.36666666666666664" />
-        <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/layout/item_conteiner_received_message.xml" value="0.3605072463768116" />
         <entry key="..\:/InDigital.Study/InDigital.Study/app/src/main/res/menu/menu.xml" value="0.36666666666666664" />
         <entry key="..\:/New folder/InDigitalStudy/app/src/main/res/drawable/ic_baseline_info.xml" value="0.167" />
         <entry key="..\:/New folder/InDigitalStudy/app/src/main/res/drawable/login_btn_bg.xml" value="0.1865" />
@@ -99,6 +67,7 @@
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/fragment_profile.xml" value="0.28125" />
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/fragment_schedule.xml" value="0.5546875" />
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/fragment_search.xml" value="0.5546875" />
+        <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/item_container_recent_conversion.xml" value="0.4708333333333333" />
       </map>
     </option>
   </component>

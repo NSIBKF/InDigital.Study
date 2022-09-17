@@ -65,19 +65,20 @@ class ProfileFragment : Fragment() {
             //Очистка файла с ключем о том, что пользователь был запомнен
             clearFile(fPrefName)
             //Удаление токена и выход
-            val database: FirebaseFirestore = FirebaseFirestore.getInstance()
-            val documentReference: DocumentReference = database.collection(Constants.KEY_COLLECTIONS_USERS).document(
-                preferenceManager.getString(Constants.KEY_USER_ID)
-            )
-            val updates:HashMap<String, Any> = HashMap()
-            updates[Constants.KEY_FCM_TOKEN] = FieldValue.delete()
-            documentReference.update(updates)
-                .addOnSuccessListener {
-                    preferenceManager.clear()
-                    showToast("Token deleted")
-                    activity?.setResult(isLogOutBtnPressedInPFCode, null)
-                    activity?.finish()
-                }
+                val database: FirebaseFirestore = FirebaseFirestore.getInstance()
+                val documentReference: DocumentReference =
+                    database.collection(Constants.KEY_COLLECTIONS_USERS).document(
+                        preferenceManager.getString(Constants.KEY_USER_ID)
+                    )
+                val updates: HashMap<String, Any> = HashMap()
+                updates[Constants.KEY_FCM_TOKEN] = FieldValue.delete()
+                documentReference.update(updates)
+                    .addOnSuccessListener {
+                        preferenceManager.clear()
+                        showToast("Token deleted")
+                        activity?.setResult(isLogOutBtnPressedInPFCode, null)
+                        activity?.finish()
+                    }
        }
 
     }
@@ -100,6 +101,5 @@ class ProfileFragment : Fragment() {
     private fun showToast(message:String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
-
 
 }

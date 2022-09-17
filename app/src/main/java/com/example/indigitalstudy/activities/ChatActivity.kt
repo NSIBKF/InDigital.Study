@@ -37,12 +37,12 @@ import kotlin.collections.HashMap
 
 class ChatActivity : BaseActivity() {
     private lateinit var binding: ActivityChatBinding
-    private lateinit var receiverUser : User
-    private lateinit var chatMessages : MutableList<ChatMessage>
+    private lateinit var receiverUser: User
+    private lateinit var chatMessages: MutableList<ChatMessage>
     private lateinit var chatAdapter : ChatAdapter
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var database: FirebaseFirestore
-    private var conversionId : String? = null
+    private var conversionId: String? = null
     private var isReceiverAvailable : Boolean = false
 
 
@@ -71,50 +71,57 @@ class ChatActivity : BaseActivity() {
     }
 
     private fun sendMessage() {
-
-        val message : HashMap<String, Any> = HashMap()
-        message[Constants.KEY_SENDER_ID] = preferenceManager.getString(Constants.KEY_USER_ID)
-        message[Constants.KEY_RECEIVER_ID] = receiverUser.id
-        message[Constants.KEY_MESSAGE] = binding.inputMessage.text.toString()
-        message[Constants.KEY_TIMESTAMP] = Date()
-        database.collection(Constants.KEY_COLLECTION_CHAT).add(message)
-        if(conversionId != null) {
-            updateConversion(binding.inputMessage.text.toString())
-        } else {
-            val conversion : HashMap<String, Any> = HashMap()
-            conversion[Constants.KEY_SENDER_ID] = preferenceManager.getString(Constants.KEY_USER_ID)
-            conversion[Constants.KEY_SENDER_NAME] = preferenceManager.getString(Constants.KEY_NAME)
-            conversion[Constants.KEY_SENDER_IMAGE] = preferenceManager.getString(Constants.KEY_IMAGE)
-            conversion[Constants.KEY_RECEIVER_ID] = receiverUser.id
-            conversion[Constants.KEY_RECEIVER_NAME] = receiverUser.name
-            conversion[Constants.KEY_RECEIVER_IMAGE] = receiverUser.image
-            conversion[Constants.KEY_LAST_MESSAGE] = binding.inputMessage.text.toString()
-            conversion[Constants.KEY_TIMESTAMP] = Date()
-            addConversion(conversion)
-        }
-
-
-        if(!isReceiverAvailable) {
-            try {
-                val tokens : JSONArray = JSONArray()
-                tokens.put(receiverUser.token)
-
-                val data : JSONObject = JSONObject()
-                data.put(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID))
-                data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME))
-                data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN))
-                data.put(Constants.KEY_MESSAGE, binding.inputMessage.text.toString())
-
-                val body : JSONObject = JSONObject()
-                body.put(Constants.REMOTE_MSG_DATA, data)
-                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens)
-
-                sendNotification(body.toString())
-            }catch (exception : Exception) {
-                exception.message?.let { showToast(it) }
+        if (binding.inputMessage.text.isNotEmpty()) {
+            val message: HashMap<String, Any> = HashMap()
+            message[Constants.KEY_SENDER_ID] = preferenceManager.getString(Constants.KEY_USER_ID)
+            message[Constants.KEY_RECEIVER_ID] = receiverUser.id
+            message[Constants.KEY_MESSAGE] = binding.inputMessage.text.toString()
+            message[Constants.KEY_TIMESTAMP] = Date()
+            database.collection(Constants.KEY_COLLECTION_CHAT).add(message)
+            if (conversionId != null) {
+                updateConversion(binding.inputMessage.text.toString())
+            } else {
+                val conversion: HashMap<String, Any> = HashMap()
+                conversion[Constants.KEY_SENDER_ID] =
+                    preferenceManager.getString(Constants.KEY_USER_ID)
+                conversion[Constants.KEY_SENDER_NAME] =
+                    preferenceManager.getString(Constants.KEY_NAME)
+                conversion[Constants.KEY_SENDER_IMAGE] =
+                    preferenceManager.getString(Constants.KEY_IMAGE)
+                conversion[Constants.KEY_RECEIVER_ID] = receiverUser.id
+                conversion[Constants.KEY_RECEIVER_NAME] = receiverUser.name
+                conversion[Constants.KEY_RECEIVER_IMAGE] = receiverUser.image
+                conversion[Constants.KEY_LAST_MESSAGE] = binding.inputMessage.text.toString()
+                conversion[Constants.KEY_TIMESTAMP] = Date()
+                addConversion(conversion)
             }
+            if (!isReceiverAvailable) {
+                try {
+                    val tokens: JSONArray = JSONArray()
+                    tokens.put(receiverUser.token)
+
+                    val data: JSONObject = JSONObject()
+                    data.put(Constants.KEY_USER_ID,
+                        preferenceManager.getString(Constants.KEY_USER_ID))
+                    data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME))
+                    data.put(Constants.KEY_FCM_TOKEN,
+                        preferenceManager.getString(Constants.KEY_FCM_TOKEN))
+                    data.put(Constants.KEY_MESSAGE, binding.inputMessage.text.toString())
+
+                    val body: JSONObject = JSONObject()
+                    body.put(Constants.REMOTE_MSG_DATA, data)
+                    body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens)
+
+                    sendNotification(body.toString())
+                } catch (exception: Exception) {
+                    exception.message?.let { showToast(it) }
+                }
+            }
+            binding.inputMessage.text = null
+        } else {
+            showToast("Write a message!")
         }
-        binding.inputMessage.text = null
+
     }
 
     private fun showToast(message: String) {
@@ -197,13 +204,13 @@ class ChatActivity : BaseActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private val eventListener =
         EventListener { value: QuerySnapshot?, error: FirebaseFirestoreException? ->
-            if(error != null) {
+            if (error != null) {
                 return@EventListener
             }
-            if(value != null) {
-                val count : Int = chatMessages.size
-                for(documentChange: DocumentChange in value.documentChanges) {
-                    if(documentChange.type == DocumentChange.Type.ADDED) {
+            if (value != null) {
+                val count: Int = chatMessages.size
+                for (documentChange: DocumentChange in value.documentChanges) {
+                    if (documentChange.type == DocumentChange.Type.ADDED) {
                         val chatMessage = ChatMessage()
                         chatMessage.senderId = documentChange.document.getString(Constants.KEY_SENDER_ID)
                         chatMessage.receiverId = documentChange.document.getString(Constants.KEY_RECEIVER_ID)
@@ -216,7 +223,7 @@ class ChatActivity : BaseActivity() {
                     }
                 }
                 chatMessages.sortWith(compareBy { it.dateObject })
-                if(count == 0) {
+                if (count == 0) {
                     chatAdapter.notifyDataSetChanged()
                 } else {
                     chatAdapter.notifyItemRangeInserted(chatMessages.size, chatMessages.size)

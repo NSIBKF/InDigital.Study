@@ -153,5 +153,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             mMediaPlayer!!.release()
             mMediaPlayer = null
         }
+        showToast("Hey it's onDestroy!'")
     }
+
 }
