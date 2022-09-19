@@ -67,9 +67,12 @@ class MessagesFragment : Fragment(), ConversionListener {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun loadUserDetails() {
         binding.textName.text = preferenceManager.getString(Constants.KEY_NAME)
-        val bytes: ByteArray? = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
-        val bitmap: Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
-        binding.ImageProfile.setImageBitmap(bitmap)
+        if (preferenceManager.getString(Constants.KEY_IMAGE) != null) {
+            val bytes: ByteArray? =
+                Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
+            val bitmap: Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
+            binding.ImageProfile.setImageBitmap(bitmap)
+        }
     }
 
     private fun setListeners() {
@@ -103,11 +106,17 @@ class MessagesFragment : Fragment(), ConversionListener {
                                 chatMessage.senderId = senderId
                                 chatMessage.receiverId = receiverId
                                 if (preferenceManager.getString(Constants.KEY_USER_ID).equals(senderId)) {
-                                    chatMessage.conversionImage = documentChange.document.getString(Constants.KEY_RECEIVER_IMAGE)
+                                    if (documentChange.document.getString(Constants.KEY_RECEIVER_IMAGE) != null) {
+                                        chatMessage.conversionImage =
+                                            documentChange.document.getString(Constants.KEY_RECEIVER_IMAGE)
+                                    }
                                     chatMessage.conversionName = documentChange.document.getString(Constants.KEY_RECEIVER_NAME)
                                     chatMessage.conversionId = documentChange.document.getString(Constants.KEY_RECEIVER_ID)
                                 } else {
-                                    chatMessage.conversionImage = documentChange.document.getString(Constants.KEY_SENDER_IMAGE)
+                                    if (documentChange.document.getString(Constants.KEY_SENDER_IMAGE) != null) {
+                                        chatMessage.conversionImage =
+                                            documentChange.document.getString(Constants.KEY_SENDER_IMAGE)
+                                    }
                                     chatMessage.conversionName = documentChange.document.getString(Constants.KEY_SENDER_NAME)
                                     chatMessage.conversionId = documentChange.document.getString(Constants.KEY_SENDER_ID)
                                 }

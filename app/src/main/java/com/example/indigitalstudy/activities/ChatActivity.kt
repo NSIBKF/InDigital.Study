@@ -62,11 +62,18 @@ class ChatActivity : AppCompatActivity() {
     private fun init() {
         preferenceManager = PreferenceManager(applicationContext)
         chatMessages = ArrayList()
-        chatAdapter = ChatAdapter(
-            chatMessages,
-            getBitmapFromEncodedStrings(receiverUser.image),
-            preferenceManager.getString(Constants.KEY_USER_ID)
-        )
+        chatAdapter = if (receiverUser.image != "") {
+            ChatAdapter(
+                chatMessages,
+                getBitmapFromEncodedStrings(receiverUser.image),
+                preferenceManager.getString(Constants.KEY_USER_ID)
+            )
+        } else {
+            ChatAdapter(
+                chatMessages,
+                preferenceManager.getString(Constants.KEY_USER_ID)
+            )
+        }
         binding.chatRecyclerView.adapter = chatAdapter
         database = FirebaseFirestore.getInstance()
     }
@@ -87,11 +94,15 @@ class ChatActivity : AppCompatActivity() {
                     preferenceManager.getString(Constants.KEY_USER_ID)
                 conversion[Constants.KEY_SENDER_NAME] =
                     preferenceManager.getString(Constants.KEY_NAME)
-                conversion[Constants.KEY_SENDER_IMAGE] =
-                    preferenceManager.getString(Constants.KEY_IMAGE)
+                if (preferenceManager.getString(Constants.KEY_IMAGE) != null) {
+                    conversion[Constants.KEY_SENDER_IMAGE] =
+                        preferenceManager.getString(Constants.KEY_IMAGE)
+                }
                 conversion[Constants.KEY_RECEIVER_ID] = receiverUser.id
                 conversion[Constants.KEY_RECEIVER_NAME] = receiverUser.name
-                conversion[Constants.KEY_RECEIVER_IMAGE] = receiverUser.image
+                if (receiverUser.image != "") {
+                    conversion[Constants.KEY_RECEIVER_IMAGE] = receiverUser.image
+                }
                 conversion[Constants.KEY_LAST_MESSAGE] = binding.inputMessage.text.toString()
                 conversion[Constants.KEY_TIMESTAMP] = Date()
                 addConversion(conversion)
@@ -239,11 +250,11 @@ class ChatActivity : AppCompatActivity() {
         }
 
     private fun getBitmapFromEncodedStrings(encodedImage: String) : Bitmap? {
-        if(encodedImage != null) {
+        return if (encodedImage != null) {
             val bytes:ByteArray = Base64.decode(encodedImage, Base64.DEFAULT)
-            return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
         } else {
-            return null
+            null
         }
     }
 

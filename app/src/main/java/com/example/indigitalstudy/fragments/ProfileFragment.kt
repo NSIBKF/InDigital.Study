@@ -86,9 +86,12 @@ class ProfileFragment : Fragment() {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun loadUserDetails() {
         bindingClassProf.userName.text = preferenceManager.getString(Constants.KEY_NAME)
-        val bytes : ByteArray? = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
-        val bitmap : Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
-        bindingClassProf.profileImage.setImageBitmap(bitmap)
+        if (preferenceManager.getString(Constants.KEY_IMAGE) != null) {
+            val bytes: ByteArray? =
+                Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
+            val bitmap: Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
+            bindingClassProf.profileImage.setImageBitmap(bitmap)
+        }
     }
 
     private fun clearFile(fileName: String) {

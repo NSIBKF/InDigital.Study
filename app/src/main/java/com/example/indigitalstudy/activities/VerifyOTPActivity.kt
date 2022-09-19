@@ -114,7 +114,9 @@ class VerifyOTPActivity : AppCompatActivity() {
         user[Constants.KEY_NAME] = name.toString()
         user[Constants.KEY_EMAIL] = email.toString()
         user[Constants.KEY_PASSWORD] = password.toString()
-        user[Constants.KEY_IMAGE] = image.toString()
+        if (image != null) {
+            user[Constants.KEY_IMAGE] = image.toString()
+        }
         database.collection(Constants.KEY_COLLECTIONS_USERS)
             .add(user)
             .addOnSuccessListener {
@@ -124,8 +126,9 @@ class VerifyOTPActivity : AppCompatActivity() {
                     Constants.KEY_NAME,
                     name.toString()
                 )
-                preferenceManager.putString(Constants.KEY_IMAGE, image)
-
+                if (image != null) {
+                    preferenceManager.putString(Constants.KEY_IMAGE, image)
+                }
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)

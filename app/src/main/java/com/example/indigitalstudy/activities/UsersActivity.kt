@@ -2,6 +2,7 @@ package com.example.indigitalstudy.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.indigitalstudy.adapters.UsersAdapter
@@ -41,7 +42,7 @@ class UsersActivity : AppCompatActivity(), UserListener {
             .addOnCompleteListener {
                 loading(false)
                 val currentUserId = preferenceManager.getString(Constants.KEY_USER_ID)
-                if(it.isSuccessful && it.result != null) {
+                if (it.isSuccessful && it.result != null) {
                     val users: MutableList<User> = ArrayList()
                     for (queryDocumentSnapshot : QueryDocumentSnapshot in it.result) {
                         if (currentUserId.equals(queryDocumentSnapshot.id)) {
@@ -59,6 +60,7 @@ class UsersActivity : AppCompatActivity(), UserListener {
                         val usersAdapter = UsersAdapter(users, this)
                         binding.usersRecyclerView.adapter = usersAdapter
                         binding.usersRecyclerView.isVisible = true
+                        Log.d("tag_UA", "User: $currentUserId")
                     } else {
                         showErrorMessage()
                     }

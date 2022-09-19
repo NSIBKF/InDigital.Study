@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
 class SendOTPActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySendOtpBinding
-    lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +68,9 @@ class SendOTPActivity : AppCompatActivity() {
                 val intent: Intent = Intent(applicationContext, VerifyOTPActivity::class.java)
                 intent.putExtra("mobile", inputMobile.text.toString())
                 intent.putExtra("verificationId", verificationId)
-                intent.putExtra("image", image.toString())
+                if (image != null) {
+                    intent.putExtra("image", image.toString())
+                }
                 intent.putExtra("email", email.toString())
                 intent.putExtra("name", name.toString())
                 intent.putExtra("password", password.toString())
@@ -81,20 +83,21 @@ class SendOTPActivity : AppCompatActivity() {
             if (inputMobile.text.toString().trim().isEmpty()) {
                 Toast.makeText(applicationContext, "Enter mobile", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
+            } else {
+                processBar.visibility = View.VISIBLE
+                buttonGetOtp.visibility = View.INVISIBLE
+
+                val phoneNumber = binding.inputMobile.text.toString()
+
+
+                val options = PhoneAuthOptions.newBuilder(auth)
+                    .setPhoneNumber("+7$phoneNumber")       // Phone number to verify
+                    .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                    .setActivity(this)                 // Activity (for callback binding)
+                    .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
+                    .build()
+                PhoneAuthProvider.verifyPhoneNumber(options)
             }
-            processBar.visibility = View.VISIBLE
-            buttonGetOtp.visibility = View.INVISIBLE
-
-            val phoneNumber = binding.inputMobile.text.toString()
-
-
-            val options = PhoneAuthOptions.newBuilder(auth)
-                .setPhoneNumber("+7$phoneNumber")       // Phone number to verify
-                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                .setActivity(this)                 // Activity (for callback binding)
-                .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-                .build()
-            PhoneAuthProvider.verifyPhoneNumber(options)
 
         }
     }
