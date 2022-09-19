@@ -27,6 +27,11 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var preferenceManager: PreferenceManager
     private lateinit var encodedImage: String
 
+    private lateinit var image : String
+    private lateinit var email : String
+    private lateinit var name : String
+    private lateinit var password : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingClass = ActivitySignUpBinding.inflate(layoutInflater)
@@ -44,7 +49,15 @@ class SignUpActivity : AppCompatActivity() {
         }
         bindingClass.signUpBtn.setOnClickListener {
             if(isValidSignUpDetails()) {
-                signUp()
+                //Переходим в одно из активити подтверждения(подтверждаем телефон)
+                val intent = Intent(this, SendOTPActivity::class.java)
+                intent.putExtra("image", encodedImage)
+                intent.putExtra("email", bindingClass.emailInput.text.toString())
+                intent.putExtra("name", bindingClass.nameInput.text.toString())
+                intent.putExtra("password", bindingClass.passwordInput.text.toString())
+
+                startActivity(intent)
+                //signUp()
             }
         }
         bindingClass.layoutImage.setOnClickListener {

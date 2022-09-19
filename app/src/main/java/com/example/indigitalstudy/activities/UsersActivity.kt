@@ -2,6 +2,7 @@ package com.example.indigitalstudy.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.indigitalstudy.adapters.UsersAdapter
 import com.example.indigitalstudy.databinding.ActivityUsersBinding
@@ -12,9 +13,9 @@ import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 
-class UsersActivity : BaseActivity(), UserListener {
+class UsersActivity : AppCompatActivity(), UserListener {
     private lateinit var binding: ActivityUsersBinding
-    private lateinit var preferenceManager: PreferenceManager
+    lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

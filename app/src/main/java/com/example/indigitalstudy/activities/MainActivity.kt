@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.indigitalstudy.R
 import com.example.indigitalstudy.databinding.ActivityMainBinding
@@ -15,7 +16,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MainActivity : BaseActivity() {
+class MainActivity : AppCompatActivity() {
     private val searchFragment = SearchFragment()
     private val homeFragment = MainFragment()
     private val personFragment = ProfileFragment()
@@ -23,7 +24,7 @@ class MainActivity : BaseActivity() {
     private val messagesFragment = MessagesFragment()
 
     private lateinit var bindingClass: ActivityMainBinding
-    private lateinit var preferenceManager: PreferenceManager
+    lateinit var preferenceManager: PreferenceManager
     private var isBackPressed: Boolean = false
 
 

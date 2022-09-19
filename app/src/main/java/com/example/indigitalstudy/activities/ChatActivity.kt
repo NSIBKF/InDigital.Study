@@ -9,6 +9,7 @@ import android.util.Base64
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.indigitalstudy.adapters.ChatAdapter
 import com.example.indigitalstudy.databinding.ActivityChatBinding
@@ -35,7 +36,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class ChatActivity : BaseActivity() {
+class ChatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatBinding
     private lateinit var receiverUser: User
     private lateinit var chatMessages: MutableList<ChatMessage>
