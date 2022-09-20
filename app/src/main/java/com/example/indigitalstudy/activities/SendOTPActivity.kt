@@ -35,21 +35,17 @@ class SendOTPActivity : AppCompatActivity() {
 
         val processBar: ProgressBar = binding.progressBar
 
-        val callbacks : PhoneAuthProvider.OnVerificationStateChangedCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        val callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks = object: PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(@NonNull phoneAuthCredential: PhoneAuthCredential) {
                 processBar.visibility = View.GONE
                 buttonGetOtp.visibility = View.VISIBLE
-                val code : String? = phoneAuthCredential.smsCode
+                val code: String? = phoneAuthCredential.smsCode
             }
 
             override fun onVerificationFailed(@NonNull firebaseException: FirebaseException) {
                 processBar.visibility = View.GONE
                 buttonGetOtp.visibility = View.VISIBLE
-                Toast.makeText(
-                    applicationContext,
-                    firebaseException.message,
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast("${firebaseException.message}")
             }
 
             override fun onCodeSent(
@@ -65,7 +61,7 @@ class SendOTPActivity : AppCompatActivity() {
                 val image = intent.getStringExtra("image")
                 val name = intent.getStringExtra("name")
 
-                val intent: Intent = Intent(applicationContext, VerifyOTPActivity::class.java)
+                val intent = Intent(applicationContext, VerifyOTPActivity::class.java)
                 intent.putExtra("mobile", inputMobile.text.toString())
                 intent.putExtra("verificationId", verificationId)
                 if (image != null) {
@@ -81,7 +77,7 @@ class SendOTPActivity : AppCompatActivity() {
 
         buttonGetOtp.setOnClickListener {
             if (inputMobile.text.toString().trim().isEmpty()) {
-                Toast.makeText(applicationContext, "Enter mobile", Toast.LENGTH_SHORT).show()
+                showToast("Enter mobile")
                 return@setOnClickListener
             } else {
                 processBar.visibility = View.VISIBLE
@@ -100,5 +96,9 @@ class SendOTPActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 }

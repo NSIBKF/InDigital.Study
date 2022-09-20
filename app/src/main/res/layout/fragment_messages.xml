@@ -7,6 +7,7 @@
     android:background="@color/background_all"
 
     >
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ImageProfile"
         android:layout_width="40dp"
@@ -14,10 +15,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/avatar_default"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/BtnNewChat"

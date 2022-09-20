@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
-import com.example.indigitalstudy.R
 import com.example.indigitalstudy.databinding.ActivitySignUpBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
@@ -45,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
             finish()
         }
         bindingClass.signUpBtn.setOnClickListener {
-            if(isValidSignUpDetails()) {
+            if (isValidSignUpDetails()) {
                 //Переходим в одно из активити подтверждения(подтверждаем телефон)
                 val intent = Intent(this, SendOTPActivity::class.java)
                 if (encodedImage != "") {

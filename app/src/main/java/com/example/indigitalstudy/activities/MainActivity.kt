@@ -77,23 +77,24 @@ class MainActivity : AppCompatActivity() {
         }.create().show()
     }
 
-    private fun showToast(message:String) {
+    private fun showToast(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //устанавливаем возвращаемый result code, сообщающий о том,
-        //что выход осуществлен через log out
-        //isBackPressed принимает значение true только при нажатии Back
-        //А при нажатии все данные, хранившиеся в переменных стираются,
-        //следовательно isBackPressed примет значение по умолчанию false
-        //По этой причине, если пользователь нажмет только log out, то
-        //произойдет переход на LoginActivity
+        /* устанавливаем возвращаемый result code, сообщающий о том,
+        что выход осуществлен через log out
+        isBackPressed принимает значение true только при нажатии Back
+        А при нажатии все данные, хранившиеся в переменных стираются,
+        следовательно isBackPressed примет значение по умолчанию false
+        По этой причине, если пользователь нажмет только log out, то
+        произойдет переход на LoginActivity */
         if (!isBackPressed) {
             val i = Intent(this, LoginActivity::class.java)
             startActivity(i)
         }
+        /*
         //Удаление токена в случае выхода без нажатия log out
         val database: FirebaseFirestore = FirebaseFirestore.getInstance()
         val documentReference: DocumentReference =
@@ -107,6 +108,8 @@ class MainActivity : AppCompatActivity() {
                 preferenceManager.clear()
                 showToast("Token deleted")
             }
+
+         */
 
     }
 

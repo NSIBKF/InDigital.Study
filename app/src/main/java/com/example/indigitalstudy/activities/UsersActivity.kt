@@ -44,14 +44,16 @@ class UsersActivity : AppCompatActivity(), UserListener {
                 val currentUserId = preferenceManager.getString(Constants.KEY_USER_ID)
                 if (it.isSuccessful && it.result != null) {
                     val users: MutableList<User> = ArrayList()
-                    for (queryDocumentSnapshot : QueryDocumentSnapshot in it.result) {
+                    for (queryDocumentSnapshot: QueryDocumentSnapshot in it.result) {
                         if (currentUserId.equals(queryDocumentSnapshot.id)) {
                             continue
                         }
                         val user = User()
                         user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME)
                         user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL)
-                        user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE)
+                        if (queryDocumentSnapshot.getString(Constants.KEY_IMAGE) != null) {
+                            user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE)
+                        }
                         user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN)
                         user.id = queryDocumentSnapshot.id
                         users.add(user)

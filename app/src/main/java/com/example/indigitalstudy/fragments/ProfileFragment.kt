@@ -23,9 +23,6 @@ import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.*
 
 
-/**
- * A simple [Fragment] subclass.
- */
 class ProfileFragment : Fragment() {
     private val fPrefName: String = "PrefsFile"
     private val isLogOutBtnPressedInPFCode: Int = 101

@@ -24,15 +24,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class VerifyOTPActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityVerifyOtpBinding
-    private lateinit var inputCode1 : EditText
-    private lateinit var inputCode2 : EditText
-    private lateinit var inputCode3 : EditText
-    private lateinit var inputCode4 : EditText
-    private lateinit var inputCode5 : EditText
-    private lateinit var inputCode6 : EditText
-    private lateinit var verificationId : String
-    private lateinit var preferenceManager : PreferenceManager
+    private lateinit var binding: ActivityVerifyOtpBinding
+    private lateinit var inputCode1: EditText
+    private lateinit var inputCode2: EditText
+    private lateinit var inputCode3: EditText
+    private lateinit var inputCode4: EditText
+    private lateinit var inputCode5: EditText
+    private lateinit var inputCode6: EditText
+    private lateinit var verificationId: String
+    private lateinit var preferenceManager: PreferenceManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,38 +40,33 @@ class VerifyOTPActivity : AppCompatActivity() {
         binding = ActivityVerifyOtpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val textMobile : TextView = binding.textMobile
+        val textMobile: TextView = binding.textMobile
         textMobile.text = String.format(
             "+7-%s", intent.getStringExtra("mobile")
         )
 
-        inputCode1 = binding.inputCode1
-        inputCode2 = binding.inputCode2
-        inputCode3 = binding.inputCode3
-        inputCode4 = binding.inputCode4
-        inputCode5 = binding.inputCode5
-        inputCode6 = binding.inputCode6
+        assigningValueInputCode1UntilInputCode6()
 
         setupOTPInputs()
 
         val progressBar = binding.progressBar
-        val buttonVerify : Button = binding.btnVerify
+        val buttonVerify: Button = binding.btnVerify
         verificationId = intent.getStringExtra("verificationId").toString()
 
         buttonVerify.setOnClickListener {
-            if(inputCode1.text.trim().isEmpty() || inputCode2.text.trim().isEmpty() || inputCode3.text.trim().isEmpty()
+            if (inputCode1.text.trim().isEmpty() || inputCode2.text.trim().isEmpty() || inputCode3.text.trim().isEmpty()
                 || inputCode4.text.trim().isEmpty() || inputCode5.text.trim().isEmpty() || inputCode6.text.trim().isEmpty()) {
-                Toast.makeText(applicationContext, "Please enter valid code", Toast.LENGTH_SHORT).show()
+                showToast("Please enter valid code")
                 return@setOnClickListener
             }
-            val code : String = inputCode1.text.toString() +
+            val code: String = inputCode1.text.toString() +
                     inputCode2.text.toString() + inputCode3.text.toString() +
                     inputCode4.text.toString() + inputCode5.text.toString() + inputCode6.text.toString()
 
-            if(verificationId != null) {
+            if (verificationId != null) {
                 progressBar.visibility = View.VISIBLE
                 buttonVerify.visibility = View.INVISIBLE
-                val phoneAuthCredential : PhoneAuthCredential = PhoneAuthProvider.getCredential(
+                val phoneAuthCredential: PhoneAuthCredential = PhoneAuthProvider.getCredential(
                     verificationId,
                     code
                 )
@@ -79,17 +74,15 @@ class VerifyOTPActivity : AppCompatActivity() {
                     .addOnCompleteListener {
                         progressBar.visibility = View.GONE
                         buttonVerify.visibility = View.VISIBLE
-                        if(it.isSuccessful) {
-
+                        if (it.isSuccessful) {
                             val email = intent.getStringExtra("email")
                             val password = intent.getStringExtra("password")
                             val image = intent.getStringExtra("image")
                             val name = intent.getStringExtra("name")
 
-                            Toast.makeText(applicationContext, "$email", Toast.LENGTH_SHORT).show()
+                            showToast("$email")
 
-                            val intent : Intent = Intent(applicationContext, LoginActivity::class.java)
-
+                            val intent = Intent(applicationContext, LoginActivity::class.java)
 
                             signUp(name, email, password, image)
                             startActivity(intent)
@@ -98,17 +91,25 @@ class VerifyOTPActivity : AppCompatActivity() {
                             //Предложение как сделать: в активити регестрации записывать в файл почту, имя, пароль и тд
                             //А тут уже их из файла взять и зарегестрировать пользователя
                             finish()
-                            Toast.makeText(applicationContext, "Your account added to the database, please logIn", Toast.LENGTH_SHORT).show()
+                            showToast("Your account added to the database, please logIn")
                         } else {
-                            Toast.makeText(applicationContext, "The verification code entered was invalid", Toast.LENGTH_SHORT).show()
+                            showToast("The verification code entered was invalid")
                         }
                     }
             }
         }
     }
 
+    private fun assigningValueInputCode1UntilInputCode6() {
+        inputCode1 = binding.inputCode1
+        inputCode2 = binding.inputCode2
+        inputCode3 = binding.inputCode3
+        inputCode4 = binding.inputCode4
+        inputCode5 = binding.inputCode5
+        inputCode6 = binding.inputCode6
+    }
 
-    private fun signUp(name : String?, email : String?, password : String?, image : String?) {
+    private fun signUp(name: String?, email: String?, password: String?, image: String?) {
         val database: FirebaseFirestore = FirebaseFirestore.getInstance()
         val user: HashMap<String, Any> = HashMap()
         user[Constants.KEY_NAME] = name.toString()
@@ -136,68 +137,30 @@ class VerifyOTPActivity : AppCompatActivity() {
             }
     }
 
+    private fun showToast(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun addTextChangedListenerForInputCodeX(inputCodeX: EditText, inputCodeXAdd1: EditText) {
+        inputCodeX.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.toString().trim().isNotEmpty()) {
+                    inputCodeXAdd1.requestFocus()
+                }
+            }
+            override fun afterTextChanged(s: Editable) {
+
+            }
+        })
+    }
 
     private fun setupOTPInputs() {
-        inputCode1.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if(s.toString().trim().isNotEmpty()) {
-                    inputCode2.requestFocus()
-                }
-            }
-            override fun afterTextChanged(s: Editable) {
-
-            }
-        })
-        inputCode2.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if(s.toString().trim().isNotEmpty()) {
-                    inputCode3.requestFocus()
-                }
-            }
-            override fun afterTextChanged(s: Editable) {
-
-            }
-        })
-        inputCode3.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if(s.toString().trim().isNotEmpty()) {
-                    inputCode4.requestFocus()
-                }
-            }
-            override fun afterTextChanged(s: Editable) {
-
-            }
-        })
-        inputCode4.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if(s.toString().trim().isNotEmpty()) {
-                    inputCode5.requestFocus()
-                }
-            }
-            override fun afterTextChanged(s: Editable) {
-
-            }
-        })
-        inputCode5.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if(s.toString().trim().isNotEmpty()) {
-                    inputCode6.requestFocus()
-                }
-            }
-            override fun afterTextChanged(s: Editable) {
-
-            }
-        })
+        addTextChangedListenerForInputCodeX(inputCode1, inputCode2)
+        addTextChangedListenerForInputCodeX(inputCode2, inputCode3)
+        addTextChangedListenerForInputCodeX(inputCode3, inputCode4)
+        addTextChangedListenerForInputCodeX(inputCode5, inputCode6)
     }
 
 

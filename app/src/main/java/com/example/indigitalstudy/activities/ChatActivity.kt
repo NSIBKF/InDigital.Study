@@ -40,11 +40,11 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatBinding
     private lateinit var receiverUser: User
     private lateinit var chatMessages: MutableList<ChatMessage>
-    private lateinit var chatAdapter : ChatAdapter
+    private lateinit var chatAdapter: ChatAdapter
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var database: FirebaseFirestore
     private var conversionId: String? = null
-    private var isReceiverAvailable : Boolean = false
+    private var isReceiverAvailable: Boolean = false
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -109,10 +109,10 @@ class ChatActivity : AppCompatActivity() {
             }
             if (!isReceiverAvailable) {
                 try {
-                    val tokens: JSONArray = JSONArray()
+                    val tokens = JSONArray()
                     tokens.put(receiverUser.token)
 
-                    val data: JSONObject = JSONObject()
+                    val data = JSONObject()
                     data.put(Constants.KEY_USER_ID,
                         preferenceManager.getString(Constants.KEY_USER_ID))
                     data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME))
@@ -120,7 +120,7 @@ class ChatActivity : AppCompatActivity() {
                         preferenceManager.getString(Constants.KEY_FCM_TOKEN))
                     data.put(Constants.KEY_MESSAGE, binding.inputMessage.text.toString())
 
-                    val body: JSONObject = JSONObject()
+                    val body = JSONObject()
                     body.put(Constants.REMOTE_MSG_DATA, data)
                     body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens)
 
@@ -140,25 +140,25 @@ class ChatActivity : AppCompatActivity() {
         Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun sendNotification(messageBody : String) {
+    private fun sendNotification(messageBody: String) {
         ApiClient.getClient().create(ApiService::class.java).sendMessage(
             Constants.getRemoteMsgHeaders(),
             messageBody
-        ).enqueue(object : Callback<String> {
+        ).enqueue(object: Callback<String> {
             @Override
-            override fun onResponse(@NonNull call : Call<String>, @NonNull response: Response<String>) {
-                if(response.isSuccessful) {
+            override fun onResponse(@NonNull call: Call<String>, @NonNull response: Response<String>) {
+                if (response.isSuccessful) {
                     try {
-                        if(response.body() != null) {
-                            val responseJson : JSONObject = JSONObject(response.body().toString())
-                            val results : JSONArray = responseJson.getJSONArray("results")
-                            if(responseJson.getInt("failure") == 1) {
-                                val error : JSONObject = results.get(0) as JSONObject
+                        if (response.body() != null) {
+                            val responseJson: JSONObject = JSONObject(response.body().toString())
+                            val results: JSONArray = responseJson.getJSONArray("results")
+                            if (responseJson.getInt("failure") == 1) {
+                                val error: JSONObject = results.get(0) as JSONObject
                                 showToast(error.getString("error"))
                                 return
                             }
                         }
-                    } catch (e : JSONException) {
+                    } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                     showToast("Notification sent successfully")
@@ -167,7 +167,7 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
             @Override
-            override fun onFailure(@NonNull call : Call<String>, @NonNull t : Throwable) {
+            override fun onFailure(@NonNull call: Call<String>, @NonNull t: Throwable) {
                 t.message?.let { showToast(it) }
             }
         })
@@ -177,19 +177,19 @@ class ChatActivity : AppCompatActivity() {
         database.collection(Constants.KEY_COLLECTIONS_USERS).document(
             receiverUser.id
         ).addSnapshotListener{value, error ->
-            if(error != null) {
+            if (error != null) {
                 return@addSnapshotListener
             }
-            if(value != null) {
+            if (value != null) {
                 if(value.getLong(Constants.KEY_AVAILABILITY) != null) {
-                    val availability : Any = Objects.requireNonNull(
+                    val availability: Any = Objects.requireNonNull(
                         value.getLong(Constants.KEY_AVAILABILITY)
                     ).toString().toInt()
                     isReceiverAvailable = availability == 1
 
                 }
                 receiverUser.token = value.getString(Constants.KEY_FCM_TOKEN)
-                if(receiverUser.image == null) {
+                if (receiverUser.image == null) {
                     receiverUser.image = value.getString(Constants.KEY_IMAGE)
                     chatAdapter.setReceiverProfileImage(getBitmapFromEncodedStrings(receiverUser.image))
                     chatAdapter.notifyItemRangeChanged(0, chatMessages.size)
@@ -279,7 +279,7 @@ class ChatActivity : AppCompatActivity() {
         return SimpleDateFormat("dd MMMM, yyyy - hh:mm a", Locale.getDefault()).format(date)
     }
 
-    private fun addConversion(conversion : HashMap<String, Any>) {
+    private fun addConversion(conversion: HashMap<String, Any>) {
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
             .add(conversion)
             .addOnSuccessListener {
@@ -288,7 +288,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun updateConversion(message: String) {
-        val documentReference : DocumentReference? =
+        val documentReference: DocumentReference? =
             conversionId?.let {
                 database.collection(Constants.KEY_COLLECTION_CONVERSATIONS).document(
                     it
@@ -313,7 +313,7 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkForConversionRemotely(senderId: String, receiverId : String) {
+    private fun checkForConversionRemotely(senderId: String, receiverId: String) {
             database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .whereEqualTo(Constants.KEY_SENDER_ID, senderId)
                 .whereEqualTo(Constants.KEY_RECEIVER_ID, receiverId)
@@ -331,7 +331,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun emoji() {
-        val emojiPopup : EmojiPopup = EmojiPopup(binding.layoutEmoji, binding.inputMessage)
+        val emojiPopup = EmojiPopup(binding.layoutEmoji, binding.inputMessage)
         binding.layoutEmoji.setOnClickListener {
             emojiPopup.toggle()
         }

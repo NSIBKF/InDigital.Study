@@ -104,17 +104,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         .whereEqualTo(Constants.KEY_PASSWORD, password)
                         .get()
                         .addOnCompleteListener {
-                            if(it.isSuccessful && it.result != null && it.result.documents.size > 0) {
+                            if (it.isSuccessful && it.result != null && it.result.documents.size > 0) {
                                 //заносим ключ в файл, чтобы сохранить данные о запоминании входа
                                 val edit: SharedPreferences.Editor = sharedPreferences.edit()
                                 edit.putBoolean("CHECK_BOX", checked)
                                 edit.apply()
-                                val documentSnapshot : DocumentSnapshot = it.result.documents[0]
+                                val documentSnapshot: DocumentSnapshot = it.result.documents[0]
                                 preferencesManager.putBoolean(Constants.KEY_IS_SIGN_IN, true)
                                 preferencesManager.putString(Constants.KEY_USER_ID, documentSnapshot.id)
                                 preferencesManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME))
                                 preferencesManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE))
-                                val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+                                val intent = Intent(applicationContext, MainActivity::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                 mainLauncher?.launch(intent)
                                 finish()
@@ -153,7 +153,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             mMediaPlayer!!.release()
             mMediaPlayer = null
         }
-        showToast("Hey it's onDestroy!'")
     }
 
 }

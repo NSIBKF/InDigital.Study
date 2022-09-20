@@ -15,20 +15,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 
 
-/**
- * A simple [Fragment] subclass.
- */
 class MainFragment : Fragment() {
 
-    private lateinit var bindingM : FragmentMessagesBinding
+    private lateinit var bindingMF: FragmentMessagesBinding
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var preferenceManager : PreferenceManager
+    private lateinit var preferenceManager: PreferenceManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bindingM = FragmentMessagesBinding.inflate(layoutInflater)
+        bindingMF = FragmentMessagesBinding.inflate(layoutInflater)
         binding = FragmentHomeBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(context)
 
@@ -36,7 +33,7 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    private fun showToast(message:String) {
+    private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -46,8 +43,8 @@ class MainFragment : Fragment() {
 
     private fun updateToken(token: String) {
         preferenceManager.putString(Constants.KEY_FCM_TOKEN, token)
-        val database : FirebaseFirestore = FirebaseFirestore.getInstance()
-        val documentReference : DocumentReference =
+        val database: FirebaseFirestore = FirebaseFirestore.getInstance()
+        val documentReference: DocumentReference =
             database.collection(Constants.KEY_COLLECTIONS_USERS).document(
                 preferenceManager.getString(Constants.KEY_USER_ID)
             )
