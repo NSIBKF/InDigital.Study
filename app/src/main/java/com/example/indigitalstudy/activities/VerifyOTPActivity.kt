@@ -160,6 +160,7 @@ class VerifyOTPActivity : AppCompatActivity() {
         addTextChangedListenerForInputCodeX(inputCode1, inputCode2)
         addTextChangedListenerForInputCodeX(inputCode2, inputCode3)
         addTextChangedListenerForInputCodeX(inputCode3, inputCode4)
+        addTextChangedListenerForInputCodeX(inputCode4, inputCode5)
         addTextChangedListenerForInputCodeX(inputCode5, inputCode6)
     }
 
