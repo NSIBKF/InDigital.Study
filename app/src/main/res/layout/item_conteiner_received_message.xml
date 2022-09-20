@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="8dp"
     android:padding="4dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ImageProfile"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:background="@drawable/avatar_default"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@id/textMessage"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,14 +17,18 @@
 
     <TextView
         android:id="@+id/textMessage"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
         android:background="@drawable/background_received_message"
-        android:padding="12dp"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
+        android:maxWidth="300dp"
+        app:layout_constraintWidth_max="wrap"
         android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@id/ImageProfile"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.75"

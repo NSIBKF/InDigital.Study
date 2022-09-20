@@ -1,15 +1,20 @@
 package com.example.indigitalstudy.activities
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.indigitalstudy.R
 import com.example.indigitalstudy.databinding.ActivityMainBinding
 import com.example.indigitalstudy.fragments.*
+import com.example.indigitalstudy.utilities.Constants
+import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
     private val searchFragment = SearchFragment()
@@ -19,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val messagesFragment = MessagesFragment()
 
     private lateinit var bindingClass: ActivityMainBinding
+    lateinit var preferenceManager: PreferenceManager
     private var isBackPressed: Boolean = false
 
 
@@ -71,22 +77,39 @@ class MainActivity : AppCompatActivity() {
         }.create().show()
     }
 
+    private fun showToast(message: String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        //intent.getBooleanExtra("key", true)
-        //startActivity(Intent(this, LoginActivity::class.java))
-        //устанавливаем возвращаемый result code, сообщающий о том,
-        //что выход осуществлен через log out
-        //isBackPressed принимает значение true только при нажатии Back
-        //А при нажатии все данные, хранившиеся в переменных стираются,
-        //следовательно isBackPressed примет значение по умолчанию false
-        //По этой причине, если пользователь нажмет только log out, то
-        //произойдет переход на LoginActivity
-        //setResult(isBackPressedInMACode, null)
+        /* устанавливаем возвращаемый result code, сообщающий о том,
+        что выход осуществлен через log out
+        isBackPressed принимает значение true только при нажатии Back
+        А при нажатии все данные, хранившиеся в переменных стираются,
+        следовательно isBackPressed примет значение по умолчанию false
+        По этой причине, если пользователь нажмет только log out, то
+        произойдет переход на LoginActivity */
         if (!isBackPressed) {
             val i = Intent(this, LoginActivity::class.java)
             startActivity(i)
         }
+        /*
+        //Удаление токена в случае выхода без нажатия log out
+        val database: FirebaseFirestore = FirebaseFirestore.getInstance()
+        val documentReference: DocumentReference =
+            database.collection(Constants.KEY_COLLECTIONS_USERS).document(
+                preferenceManager.getString(Constants.KEY_USER_ID)
+            )
+        val updates: HashMap<String, Any> = HashMap()
+        updates[Constants.KEY_FCM_TOKEN] = FieldValue.delete()
+        documentReference.update(updates)
+            .addOnSuccessListener {
+                preferenceManager.clear()
+                showToast("Token deleted")
+            }
+
+         */
 
     }
 

@@ -23,9 +23,6 @@ import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.*
 
 
-/**
- * A simple [Fragment] subclass.
- */
 class ProfileFragment : Fragment() {
     private val fPrefName: String = "PrefsFile"
     private val isLogOutBtnPressedInPFCode: Int = 101
@@ -65,19 +62,20 @@ class ProfileFragment : Fragment() {
             //Очистка файла с ключем о том, что пользователь был запомнен
             clearFile(fPrefName)
             //Удаление токена и выход
-            val database: FirebaseFirestore = FirebaseFirestore.getInstance()
-            val documentReference: DocumentReference = database.collection(Constants.KEY_COLLECTIONS_USERS).document(
-                preferenceManager.getString(Constants.KEY_USER_ID)
-            )
-            val updates:HashMap<String, Any> = HashMap()
-            updates[Constants.KEY_FCM_TOKEN] = FieldValue.delete()
-            documentReference.update(updates)
-                .addOnSuccessListener {
-                    preferenceManager.clear()
-                    showToast("Token deleted")
-                    activity?.setResult(isLogOutBtnPressedInPFCode, null)
-                    activity?.finish()
-                }
+                val database: FirebaseFirestore = FirebaseFirestore.getInstance()
+                val documentReference: DocumentReference =
+                    database.collection(Constants.KEY_COLLECTIONS_USERS).document(
+                        preferenceManager.getString(Constants.KEY_USER_ID)
+                    )
+                val updates: HashMap<String, Any> = HashMap()
+                updates[Constants.KEY_FCM_TOKEN] = FieldValue.delete()
+                documentReference.update(updates)
+                    .addOnSuccessListener {
+                        preferenceManager.clear()
+                        showToast("Token deleted")
+                        activity?.setResult(isLogOutBtnPressedInPFCode, null)
+                        activity?.finish()
+                    }
        }
 
     }
@@ -85,9 +83,12 @@ class ProfileFragment : Fragment() {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private fun loadUserDetails() {
         bindingClassProf.userName.text = preferenceManager.getString(Constants.KEY_NAME)
-        val bytes : ByteArray? = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
-        val bitmap : Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
-        bindingClassProf.profileImage.setImageBitmap(bitmap)
+        if (preferenceManager.getString(Constants.KEY_IMAGE) != null) {
+            val bytes: ByteArray? =
+                Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
+            val bitmap: Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
+            bindingClassProf.profileImage.setImageBitmap(bitmap)
+        }
     }
 
     private fun clearFile(fileName: String) {
@@ -100,6 +101,5 @@ class ProfileFragment : Fragment() {
     private fun showToast(message:String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
-
 
 }

@@ -25,7 +25,8 @@ import kotlin.collections.HashMap
 class SignUpActivity : AppCompatActivity() {
     private lateinit var bindingClass: ActivitySignUpBinding
     lateinit var preferenceManager: PreferenceManager
-    private lateinit var encodedImage: String
+    private var encodedImage: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +44,22 @@ class SignUpActivity : AppCompatActivity() {
             finish()
         }
         bindingClass.signUpBtn.setOnClickListener {
-            if(isValidSignUpDetails()) {
-                signUp()
+            if (isValidSignUpDetails()) {
+                //Переходим в одно из активити подтверждения(подтверждаем телефон)
+                val intent = Intent(this, SendOTPActivity::class.java)
+                if (encodedImage != "") {
+                    intent.putExtra("image", encodedImage)
+                }
+                intent.putExtra("email", bindingClass.emailInput.text.toString())
+                intent.putExtra("name", bindingClass.nameInput.text.toString())
+                intent.putExtra("password", bindingClass.passwordInput.text.toString())
+
+                startActivity(intent)
+                //signUp()
             }
         }
         bindingClass.layoutImage.setOnClickListener {
-                val intent: Intent =
+                val intent =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 pickImage.launch(intent)
@@ -80,7 +91,7 @@ class SignUpActivity : AppCompatActivity() {
                     )
                     preferenceManager.putString(Constants.KEY_IMAGE, encodedImage)
 
-                    val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+                    val intent = Intent(applicationContext, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                     finish()
@@ -124,9 +135,7 @@ class SignUpActivity : AppCompatActivity() {
 
         if (bindingClass.nameInput.text.toString().trim().isEmpty()) {
             showToast("Enter name")
-        } else if(encodedImage == null) {   //баг с картинкой вызывается тут
-            showToast("Enter image")
-        } else if (bindingClass.emailInput.text.toString().trim().isEmpty()) {
+        }  else if (bindingClass.emailInput.text.toString().trim().isEmpty()) {
             showToast("Enter email")
         } else if (!Patterns.EMAIL_ADDRESS.matcher(bindingClass.emailInput.text.toString()).matches()) {
             showToast("Enter valid email")
@@ -144,7 +153,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun loading(isLoading: Boolean) {
-        if(isLoading) {
+        if (isLoading) {
             bindingClass.signUpBtn.isVisible = false
             bindingClass.progressBarSignUp.isVisible = true
         } else {

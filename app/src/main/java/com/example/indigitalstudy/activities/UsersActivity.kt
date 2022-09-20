@@ -1,19 +1,22 @@
 package com.example.indigitalstudy.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.indigitalstudy.adapters.UsersAdapter
 import com.example.indigitalstudy.databinding.ActivityUsersBinding
+import com.example.indigitalstudy.listeners.UserListener
 import com.example.indigitalstudy.models.User
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 
-class UsersActivity : AppCompatActivity() {
+class UsersActivity : AppCompatActivity(), UserListener {
     private lateinit var binding: ActivityUsersBinding
-    private lateinit var preferenceManager: PreferenceManager
+    lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,23 +42,27 @@ class UsersActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 loading(false)
                 val currentUserId = preferenceManager.getString(Constants.KEY_USER_ID)
-                if(it.isSuccessful && it.result != null) {
+                if (it.isSuccessful && it.result != null) {
                     val users: MutableList<User> = ArrayList()
-                    for (queryDocumentSnapshot : QueryDocumentSnapshot in it.result) {
+                    for (queryDocumentSnapshot: QueryDocumentSnapshot in it.result) {
                         if (currentUserId.equals(queryDocumentSnapshot.id)) {
                             continue
                         }
                         val user = User()
                         user.name = queryDocumentSnapshot.getString(Constants.KEY_NAME)
                         user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL)
-                        user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE)
+                        if (queryDocumentSnapshot.getString(Constants.KEY_IMAGE) != null) {
+                            user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE)
+                        }
                         user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN)
+                        user.id = queryDocumentSnapshot.id
                         users.add(user)
                     }
                     if (users.size > 0) {
-                        val usersAdapter = UsersAdapter(users)
+                        val usersAdapter = UsersAdapter(users, this)
                         binding.usersRecyclerView.adapter = usersAdapter
                         binding.usersRecyclerView.isVisible = true
+                        Log.d("tag_UA", "User: $currentUserId")
                     } else {
                         showErrorMessage()
                     }
@@ -72,5 +79,12 @@ class UsersActivity : AppCompatActivity() {
 
     private fun loading(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading
+    }
+
+    override fun onUserClicked(user: User?) {
+        val intent = Intent(applicationContext, ChatActivity::class.java)
+        intent.putExtra(Constants.KEY_USER, user)
+        startActivity(intent)
+        finish()
     }
 }

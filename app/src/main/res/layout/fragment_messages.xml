@@ -7,6 +7,7 @@
     android:background="@color/background_all"
 
     >
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ImageProfile"
         android:layout_width="40dp"
@@ -14,10 +15,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/avatar_default"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/BtnNewChat"
@@ -51,4 +52,45 @@
         app:layout_constraintTop_toTopOf="@+id/ImageProfile"
         />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ImageProfile"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/conversationsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:padding="20dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/notFunnyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="30sp"
+            android:textColor="@color/grey"
+            android:text="@string/you_need_to_start_communication_press_to_start_talk_with_someone"
+            android:gravity="center"
+            />
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
