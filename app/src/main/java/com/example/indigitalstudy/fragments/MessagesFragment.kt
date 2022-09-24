@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,7 @@ class MessagesFragment : Fragment(), ConversionListener {
         binding = FragmentMessagesBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(context)
         loadUserDetails()
+        Log.d("tag_UA", "finished LoadUserDetails()")
         init()
         setListeners()
         listenConversations()
@@ -72,6 +74,8 @@ class MessagesFragment : Fragment(), ConversionListener {
                 Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT)
             val bitmap: Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
             binding.ImageProfile.setImageBitmap(bitmap)
+        } else {
+            Log.d("tag_UA", "LoadUserDetails()")
         }
     }
 

@@ -192,8 +192,8 @@ class ChatActivity : AppCompatActivity() {
                 if (receiverUser.image == null) {
                     receiverUser.image = value.getString(Constants.KEY_IMAGE)
                     chatAdapter.setReceiverProfileImage(getBitmapFromEncodedStrings(receiverUser.image))
-                    chatAdapter.notifyItemRangeChanged(0, chatMessages.size)
                 }
+                    chatAdapter.notifyItemRangeChanged(0, chatMessages.size)
             }
             binding.textAvailability.isVisible = isReceiverAvailable
 

@@ -1,10 +1,15 @@
 package com.example.indigitalstudy.activities
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.example.indigitalstudy.R
 import com.example.indigitalstudy.adapters.UsersAdapter
 import com.example.indigitalstudy.databinding.ActivityUsersBinding
 import com.example.indigitalstudy.listeners.UserListener
@@ -13,6 +18,8 @@ import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 
 class UsersActivity : AppCompatActivity(), UserListener {
     private lateinit var binding: ActivityUsersBinding
@@ -23,6 +30,7 @@ class UsersActivity : AppCompatActivity(), UserListener {
         binding = ActivityUsersBinding.inflate(layoutInflater)
         preferenceManager = PreferenceManager(applicationContext)
         setListeners()
+        Log.d("tag_UA", "Start method: getUsers()")
         getUsers()
         setContentView(binding.root)
 
@@ -53,6 +61,7 @@ class UsersActivity : AppCompatActivity(), UserListener {
                         user.email = queryDocumentSnapshot.getString(Constants.KEY_EMAIL)
                         if (queryDocumentSnapshot.getString(Constants.KEY_IMAGE) != null) {
                             user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE)
+                            Log.d("tag_UA", "User: ${user.name}")
                         }
                         user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN)
                         user.id = queryDocumentSnapshot.id

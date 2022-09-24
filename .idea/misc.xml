@@ -61,10 +61,17 @@
         <entry key="..\:/inDigital/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3955" />
         <entry key="..\:/inDigital/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.317" />
         <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/drawable/login_btn_bg.xml" value="0.372" />
-        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/activity_chat.xml" value="0.3140625" />
+        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/activity_chat.xml" value="0.3333333333333333" />
+        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/activity_login.xml" value="0.3958333333333333" />
+        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/activity_main.xml" value="0.3958333333333333" />
         <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/activity_users.xml" value="0.5546875" />
         <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/fragment_messages.xml" value="0.4945652173913043" />
         <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/fragment_profile.xml" value="0.2907608695652174" />
+        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/fragment_search.xml" value="0.3958333333333333" />
+        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/item_container_recent_conversion.xml" value="0.3958333333333333" />
+        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/item_container_sent_message.xml" value="0.3958333333333333" />
+        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/item_container_user.xml" value="0.3958333333333333" />
+        <entry key="..\:/inDigital_main/InDigital.Study/app/src/main/res/layout/item_conteiner_received_message.xml" value="0.3958333333333333" />
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/activity_sign_up.xml" value="0.1752786220871327" />
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/fragment_home.xml" value="0.5546875" />
         <entry key="..\:/inDigital_pub/InDigital.Study/app/src/main/res/layout/fragment_messages.xml" value="0.5546875" />

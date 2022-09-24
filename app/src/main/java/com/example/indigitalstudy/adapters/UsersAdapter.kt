@@ -44,7 +44,9 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
         fun setUserData(user: User) {
             binding.textName.text = user.name
             binding.textEmail.text = user.email
-            binding.ImageProfile.setImageBitmap(getUserImage(user.image))
+            if (user.image != "") {
+                binding.ImageProfile.setImageBitmap(getUserImage(user.image))
+            }
             binding.root.setOnClickListener {
                 userListener.onUserClicked(user)
             }
