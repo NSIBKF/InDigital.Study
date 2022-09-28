@@ -58,18 +58,17 @@ class SendOTPActivity : AppCompatActivity() {
 
                 val email = intent.getStringExtra("email")
                 val password = intent.getStringExtra("password")
-                val image = intent.getStringExtra("image")
                 val name = intent.getStringExtra("name")
+                // If user didn't choose image, variable's image will assign null
+                val image = intent.getStringExtra("image")
 
                 val intent = Intent(applicationContext, VerifyOTPActivity::class.java)
                 intent.putExtra("mobile", inputMobile.text.toString())
                 intent.putExtra("verificationId", verificationId)
-                if (image != null) {
-                    intent.putExtra("image", image.toString())
-                }
                 intent.putExtra("email", email.toString())
-                intent.putExtra("name", name.toString())
                 intent.putExtra("password", password.toString())
+                intent.putExtra("name", name.toString())
+                intent.putExtra("image", image.toString())
 
                 startActivity(intent)
             }

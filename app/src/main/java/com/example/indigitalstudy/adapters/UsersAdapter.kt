@@ -13,8 +13,8 @@ import com.example.indigitalstudy.models.User
 
 class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
 
-    private var users : List<User>
-    private var userListener : UserListener
+    private var users: List<User>
+    private var userListener: UserListener
 
 
     constructor (users: List<User>, userListener: UserListener) {
@@ -23,7 +23,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val itemContainerUserBinding : ItemContainerUserBinding = ItemContainerUserBinding.inflate(
+        val itemContainerUserBinding: ItemContainerUserBinding = ItemContainerUserBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -39,14 +39,12 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserViewHolder>{
         return users.size
     }
 
-    inner class UserViewHolder(var binding: ItemContainerUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class UserViewHolder(var binding: ItemContainerUserBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun setUserData(user: User) {
             binding.textName.text = user.name
             binding.textEmail.text = user.email
-            if (user.image != "") {
-                binding.ImageProfile.setImageBitmap(getUserImage(user.image))
-            }
+            binding.ImageProfile.setImageBitmap(getUserImage(user.image))
             binding.root.setOnClickListener {
                 userListener.onUserClicked(user)
             }

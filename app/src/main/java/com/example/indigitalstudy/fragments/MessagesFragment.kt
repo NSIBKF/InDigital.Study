@@ -52,9 +52,9 @@ class MessagesFragment : Fragment(), ConversionListener {
         loadUserDetails()
         Log.d("tag_UA", "finished LoadUserDetails()")
         init()
-        setListeners()
         listenConversations()
-        binding.notFunnyText.isVisible = binding.conversationsRecyclerView.size == 0
+        setListeners()
+        binding.notFunnyText.isVisible = binding.conversationsRecyclerView.adapter?.itemCount == 0
         return binding.root
 
     }
@@ -76,6 +76,10 @@ class MessagesFragment : Fragment(), ConversionListener {
             binding.ImageProfile.setImageBitmap(bitmap)
         } else {
             Log.d("tag_UA", "LoadUserDetails()")
+            val bytes: ByteArray? =
+                Base64.decode(preferenceManager.getString(Constants.KEY_DEF_IMAGE), Base64.DEFAULT)
+            val bitmap: Bitmap? = bytes?.let { BitmapFactory.decodeByteArray(bytes, 0, it.size) }
+            binding.ImageProfile.setImageBitmap(bitmap)
         }
     }
 
@@ -101,7 +105,7 @@ class MessagesFragment : Fragment(), ConversionListener {
                         return@EventListener
                     }
                     if (value != null) {
-                        for (documentChange in value.documentChanges) {
+                        value.documentChanges.forEach { documentChange ->
                             if (documentChange.type == DocumentChange.Type.ADDED) {
                                 val senderId = documentChange.document.getString(Constants.KEY_SENDER_ID)
                                 val receiverId =
@@ -113,6 +117,9 @@ class MessagesFragment : Fragment(), ConversionListener {
                                     if (documentChange.document.getString(Constants.KEY_RECEIVER_IMAGE) != null) {
                                         chatMessage.conversionImage =
                                             documentChange.document.getString(Constants.KEY_RECEIVER_IMAGE)
+                                    } else {
+                                        chatMessage.conversionImage =
+                                            preferenceManager.getString(Constants.KEY_DEF_IMAGE)
                                     }
                                     chatMessage.conversionName = documentChange.document.getString(Constants.KEY_RECEIVER_NAME)
                                     chatMessage.conversionId = documentChange.document.getString(Constants.KEY_RECEIVER_ID)
@@ -120,6 +127,9 @@ class MessagesFragment : Fragment(), ConversionListener {
                                     if (documentChange.document.getString(Constants.KEY_SENDER_IMAGE) != null) {
                                         chatMessage.conversionImage =
                                             documentChange.document.getString(Constants.KEY_SENDER_IMAGE)
+                                    } else {
+                                            chatMessage.conversionImage =
+                                                preferenceManager.getString(Constants.KEY_DEF_IMAGE)
                                     }
                                     chatMessage.conversionName = documentChange.document.getString(Constants.KEY_SENDER_NAME)
                                     chatMessage.conversionId = documentChange.document.getString(Constants.KEY_SENDER_ID)
@@ -131,7 +141,7 @@ class MessagesFragment : Fragment(), ConversionListener {
                                 for (i in conversations.indices) {
                                     val senderId: String? = documentChange.document.getString(Constants.KEY_SENDER_ID)
                                     val receiverId: String? = documentChange.document.getString(Constants.KEY_RECEIVER_ID)
-                                    if(conversations[i].senderId.equals(senderId) && conversations[i].receiverId.equals(receiverId)) {
+                                    if (conversations[i].senderId.equals(senderId) && conversations[i].receiverId.equals(receiverId)) {
                                         conversations[i].message = documentChange.document.getString(Constants.KEY_LAST_MESSAGE)
                                         conversations[i].dateObject = documentChange.document.getDate(Constants.KEY_TIMESTAMP)
                                         break
@@ -149,7 +159,8 @@ class MessagesFragment : Fragment(), ConversionListener {
 
     override fun onStop() {
         super.onStop()
-        binding.notFunnyText.isVisible = binding.conversationsRecyclerView.size == 0
+        Toast.makeText(context, "a text", Toast.LENGTH_SHORT)
+        binding.notFunnyText.isVisible = binding.conversationsRecyclerView.adapter?.itemCount == 0
     }
 
     override fun onConversionClicked(user: User?) {

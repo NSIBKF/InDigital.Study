@@ -77,14 +77,12 @@ class VerifyOTPActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             val email = intent.getStringExtra("email")
                             val password = intent.getStringExtra("password")
-                            val image = intent.getStringExtra("image")
                             val name = intent.getStringExtra("name")
-
-                            showToast("$email")
-
-                            val intent = Intent(applicationContext, LoginActivity::class.java)
+                            val image = intent.getStringExtra("image")
 
                             signUp(name, email, password, image)
+
+                            val intent = Intent(applicationContext, LoginActivity::class.java)
                             startActivity(intent)
 
                             //НАДО РЕАЛИЗОВАТЬ ДОБАВЛЕНИЕ В FIRESTORE DATABASE

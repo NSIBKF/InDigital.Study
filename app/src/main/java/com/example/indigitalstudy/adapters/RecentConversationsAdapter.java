@@ -17,7 +17,7 @@ import com.example.indigitalstudy.models.User;
 import java.util.List;
 
 
-public class RecentConversationsAdapter  extends RecyclerView.Adapter<RecentConversationsAdapter.ConversionViewHolder> {
+public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConversationsAdapter.ConversionViewHolder> {
 
     private final List<ChatMessage> chatMessages;
     private final ConversionListener conversionListener;
@@ -59,18 +59,14 @@ public class RecentConversationsAdapter  extends RecyclerView.Adapter<RecentConv
         }
 
         void setData(ChatMessage chatMessage) {
-            if (chatMessage.conversionImage != null) {
-                binding.ImageProfile.setImageBitmap(getConversationImage(chatMessage.conversionImage));
-            }
+            binding.ImageProfile.setImageBitmap(getConversationImage(chatMessage.conversionImage));
             binding.textName.setText(chatMessage.conversionName);
             binding.textRecentMessage.setText(chatMessage.message);
             binding.getRoot().setOnClickListener(v -> {
                 User user = new User();
                 user.id = chatMessage.conversionId;
                 user.name = chatMessage.conversionName;
-                if (chatMessage.conversionImage != null) {
-                    user.image = chatMessage.conversionImage;
-                }
+                user.image = chatMessage.conversionImage;
                 conversionListener.onConversionClicked(user);
             });
         }

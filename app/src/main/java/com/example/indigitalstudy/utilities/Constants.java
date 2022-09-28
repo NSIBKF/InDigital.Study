@@ -10,6 +10,7 @@ public class Constants {
     public static final String KEY_PREFERENCE_NAME = "InDigitalPreference";
     public static final String KEY_IS_SIGN_IN = "isSignIn";
     public static final String KEY_USER_ID = "userId";
+    public static final String KEY_DEF_IMAGE = "defImage";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_FCM_TOKEN = "fcmToken";
     public static final String KEY_USER = "user";

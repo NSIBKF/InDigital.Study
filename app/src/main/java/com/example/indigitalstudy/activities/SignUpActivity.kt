@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
+import com.example.indigitalstudy.R
 import com.example.indigitalstudy.databinding.ActivitySignUpBinding
 import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
@@ -47,9 +48,8 @@ class SignUpActivity : AppCompatActivity() {
             if (isValidSignUpDetails()) {
                 //Переходим в одно из активити подтверждения(подтверждаем телефон)
                 val intent = Intent(this, SendOTPActivity::class.java)
-                if (encodedImage != "") {
-                    intent.putExtra("image", encodedImage)
-                }
+                // If user loads image
+                putImageInIntentOrNotAndAddDefImageInPrefM()
                 intent.putExtra("email", bindingClass.emailInput.text.toString())
                 intent.putExtra("name", bindingClass.nameInput.text.toString())
                 intent.putExtra("password", bindingClass.passwordInput.text.toString())
@@ -63,6 +63,26 @@ class SignUpActivity : AppCompatActivity() {
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 pickImage.launch(intent)
+        }
+    }
+
+    private fun putImageInIntentOrNotAndAddDefImageInPrefM() {
+        if (encodedImage != "") {
+            intent.putExtra("image", encodedImage)
+        } else {
+            val imageUri: Uri? = Uri.parse("android.resource://"
+                    + packageName
+                    + "/"
+                    + R.drawable.avatar_default
+            )
+            try {
+                val inputStream: InputStream? = contentResolver.openInputStream(imageUri!!)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                encodedImage = encodeImage(bitmap)
+                preferenceManager.putString(Constants.KEY_DEF_IMAGE, encodedImage)
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
         }
     }
 

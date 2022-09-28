@@ -11,9 +11,9 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/avatar_default"
         app:layout_constraintBottom_toBottomOf="@id/textMessage"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textMessage"

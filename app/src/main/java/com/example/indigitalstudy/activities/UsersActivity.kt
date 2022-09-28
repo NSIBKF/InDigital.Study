@@ -62,6 +62,8 @@ class UsersActivity : AppCompatActivity(), UserListener {
                         if (queryDocumentSnapshot.getString(Constants.KEY_IMAGE) != null) {
                             user.image = queryDocumentSnapshot.getString(Constants.KEY_IMAGE)
                             Log.d("tag_UA", "User: ${user.name}")
+                        } else {
+                            user.image = preferenceManager.getString(Constants.KEY_DEF_IMAGE)
                         }
                         user.token = queryDocumentSnapshot.getString(Constants.KEY_FCM_TOKEN)
                         user.id = queryDocumentSnapshot.id

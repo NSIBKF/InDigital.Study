@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResult
@@ -19,6 +22,9 @@ import com.example.indigitalstudy.utilities.Constants
 import com.example.indigitalstudy.utilities.PreferenceManager
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import java.io.ByteArrayOutputStream
+import java.io.FileNotFoundException
+import java.io.InputStream
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private val fPrefName: String = "PrefsFile"
@@ -114,6 +120,23 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 preferencesManager.putString(Constants.KEY_USER_ID, documentSnapshot.id)
                                 preferencesManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME))
                                 preferencesManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE))
+                                if (preferencesManager.getString(Constants.KEY_DEF_IMAGE) == null) {
+                                    val imageUri: Uri? = Uri.parse("android.resource://"
+                                            + packageName
+                                            + "/"
+                                            + R.drawable.avatar_default
+                                    )
+                                    try {
+                                        val inputStream: InputStream? =
+                                            contentResolver.openInputStream(imageUri!!)
+                                        val bitmap = BitmapFactory.decodeStream(inputStream)
+                                        val encodedImage: String? = encodeImage(bitmap)
+                                        preferencesManager.putString(Constants.KEY_DEF_IMAGE,
+                                            encodedImage)
+                                    } catch (e: FileNotFoundException) {
+                                        e.printStackTrace()
+                                    }
+                                }
                                 val intent = Intent(applicationContext, MainActivity::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK / Intent.FLAG_ACTIVITY_CLEAR_TASK)
                                 mainLauncher?.launch(intent)
@@ -134,6 +157,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showToast(message: String?) {
             Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun encodeImage(bitmap: Bitmap): String {
+        val previewWidth = 150
+        val previewHeight = bitmap.height * previewWidth / bitmap.width
+        val previewBitmap: Bitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, true)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream)
+        val bytes: ByteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(bytes, Base64.DEFAULT)
     }
 
     override fun onPause() {

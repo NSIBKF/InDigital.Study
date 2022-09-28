@@ -62,18 +62,12 @@ class ChatActivity : AppCompatActivity() {
     private fun init() {
         preferenceManager = PreferenceManager(applicationContext)
         chatMessages = ArrayList()
-        chatAdapter = if (receiverUser.image != "") {
+        chatAdapter =
             ChatAdapter(
                 chatMessages,
                 getBitmapFromEncodedStrings(receiverUser.image),
                 preferenceManager.getString(Constants.KEY_USER_ID)
             )
-        } else {
-            ChatAdapter(
-                chatMessages,
-                preferenceManager.getString(Constants.KEY_USER_ID)
-            )
-        }
         binding.chatRecyclerView.adapter = chatAdapter
         database = FirebaseFirestore.getInstance()
     }
@@ -97,11 +91,16 @@ class ChatActivity : AppCompatActivity() {
                 if (preferenceManager.getString(Constants.KEY_IMAGE) != null) {
                     conversion[Constants.KEY_SENDER_IMAGE] =
                         preferenceManager.getString(Constants.KEY_IMAGE)
+                } else {
+                    conversion[Constants.KEY_SENDER_IMAGE] =
+                        preferenceManager.getString(Constants.KEY_DEF_IMAGE)
                 }
                 conversion[Constants.KEY_RECEIVER_ID] = receiverUser.id
                 conversion[Constants.KEY_RECEIVER_NAME] = receiverUser.name
-                if (receiverUser.image != "") {
+                if (receiverUser.image != null) {
                     conversion[Constants.KEY_RECEIVER_IMAGE] = receiverUser.image
+                } else {
+                    conversion[Constants.KEY_RECEIVER_IMAGE] = preferenceManager.getString(Constants.KEY_DEF_IMAGE)
                 }
                 conversion[Constants.KEY_LAST_MESSAGE] = binding.inputMessage.text.toString()
                 conversion[Constants.KEY_TIMESTAMP] = Date()
@@ -150,7 +149,7 @@ class ChatActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     try {
                         if (response.body() != null) {
-                            val responseJson: JSONObject = JSONObject(response.body().toString())
+                            val responseJson = JSONObject(response.body().toString())
                             val results: JSONArray = responseJson.getJSONArray("results")
                             if (responseJson.getInt("failure") == 1) {
                                 val error: JSONObject = results.get(0) as JSONObject
@@ -181,7 +180,7 @@ class ChatActivity : AppCompatActivity() {
                 return@addSnapshotListener
             }
             if (value != null) {
-                if(value.getLong(Constants.KEY_AVAILABILITY) != null) {
+                if (value.getLong(Constants.KEY_AVAILABILITY) != null) {
                     val availability: Any = Objects.requireNonNull(
                         value.getLong(Constants.KEY_AVAILABILITY)
                     ).toString().toInt()
@@ -189,11 +188,14 @@ class ChatActivity : AppCompatActivity() {
 
                 }
                 receiverUser.token = value.getString(Constants.KEY_FCM_TOKEN)
-                if (receiverUser.image == null) {
+                if (value.getString(Constants.KEY_IMAGE) != null) {
                     receiverUser.image = value.getString(Constants.KEY_IMAGE)
-                    chatAdapter.setReceiverProfileImage(getBitmapFromEncodedStrings(receiverUser.image))
+                } else {
+                    receiverUser.image = preferenceManager.getString(Constants.KEY_DEF_IMAGE)
                 }
-                    chatAdapter.notifyItemRangeChanged(0, chatMessages.size)
+                chatAdapter.setReceiverProfileImage(getBitmapFromEncodedStrings(receiverUser.image))
+
+                chatAdapter.notifyItemRangeChanged(0, chatMessages.size)
             }
             binding.textAvailability.isVisible = isReceiverAvailable
 
@@ -244,18 +246,14 @@ class ChatActivity : AppCompatActivity() {
                 binding.chatRecyclerView.isVisible = true
             }
             binding.progressBar.isVisible = false
-            if(conversionId == null) {
+            if (conversionId == null) {
                 checkForConversion()
             }
         }
 
-    private fun getBitmapFromEncodedStrings(encodedImage: String) : Bitmap? {
-        return if (encodedImage != null) {
-            val bytes:ByteArray = Base64.decode(encodedImage, Base64.DEFAULT)
-            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-        } else {
-            null
-        }
+    private fun getBitmapFromEncodedStrings(encodedImage: String): Bitmap? {
+        val bytes: ByteArray = Base64.decode(encodedImage, Base64.DEFAULT)
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     }
 
     private fun loadReceiverDetails() {

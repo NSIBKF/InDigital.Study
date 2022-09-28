@@ -32,11 +32,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.senderId = senderId;
     }
 
-    public ChatAdapter(List<ChatMessage> chatMessages, String senderId) {
-        this.chatMessages = chatMessages;
-        this.senderId = senderId;
-    }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
